@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 type FormData = {
 name: string;
+second_name: string;
+cedula: string;
 email: string;
 company: string;
 phone: string;
@@ -14,6 +16,8 @@ message: string;
 export function HeroForm() {
 const [formData, setFormData] = useState<FormData>({
 name: '',
+second_name: '',
+cedula: '',
 email: '',
 company: '',
 phone: '',
@@ -42,17 +46,33 @@ setIsSubmitting(true);
 setSubmitStatus('idle');
 
 try {
-// Aquí puedes integrar con tu servicio de email o API
-// Por ahora simulamos el envío
-await new Promise((resolve) => setTimeout(resolve, 2000));
+// Enviar datos a la API
+const response = await fetch('/api/leads', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify({
+...formData,
+source: 'hero-form'
+})
+});
 
-// Simular envío exitoso
+const result = await response.json();
+
+if (!response.ok) {
+throw new Error(result.error || 'Error al enviar el formulario');
+}
+
+// Envío exitoso
 setSubmitStatus('success');
 
 // Resetear formulario después de 3 segundos
 setTimeout(() => {
 setFormData({
 name: '',
+second_name: '',
+cedula: '',
 email: '',
 company: '',
 phone: '',
@@ -62,6 +82,7 @@ message: ''
 setSubmitStatus('idle');
 }, 3000);
 } catch (error) {
+console.error('Error al enviar formulario:', error);
 setSubmitStatus('error');
 } finally {
 setIsSubmitting(false);
@@ -106,6 +127,42 @@ onChange={handleChange}
 required
 className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
 placeholder="Tu nombre completo"
+/>
+</div>
+
+<div>
+<label
+htmlFor="second_name"
+className="block text-sm font-medium text-slate-700 mb-2"
+>
+Segundo nombre
+</label>
+<input
+type="text"
+id="second_name"
+name="second_name"
+value={formData.second_name}
+onChange={handleChange}
+className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+placeholder="Tu segundo nombre"
+/>
+</div>
+
+<div>
+<label
+htmlFor="cedula"
+className="block text-sm font-medium text-slate-700 mb-2"
+>
+Cédula
+</label>
+<input
+type="text"
+id="cedula"
+name="cedula"
+value={formData.cedula}
+onChange={handleChange}
+className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+placeholder="Tu número de cédula"
 />
 </div>
 
