@@ -6,7 +6,6 @@ Crea un archivo `.env.local` en la raíz del proyecto con la siguiente configura
 
 ```env
 # MongoDB Connection String
-MONGODB_URI=mongodb://localhost:27017/interfaz-didactica
 ```
 
 ### Opciones de MongoDB:
@@ -19,7 +18,7 @@ MONGODB_URI=mongodb://localhost:27017/interfaz-didactica
 
 2. **MongoDB Atlas (Recomendado para producción):**
    ```env
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/interfaz-didactica?retryWrites=true&w=majority
+
    ```
 
 ## Estructura de la Base de Datos
