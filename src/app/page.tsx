@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import {
 categories,
@@ -12,14 +14,16 @@ import { ServicesSection } from '@/components/ServicesSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { StatsSection } from '@/components/StatsSection';
 import { CTASection } from '@/components/CTASection';
-import { HeroForm } from '@/components/HeroForm';
+import { useContact } from '@/components/ClientLayout';
 
 export default function Home() {
+const { openContactModal } = useContact();
 const featured = courses.filter((c) => c.featured);
+
 return (
 <div>
 {/* Hero Section */}
-<section className="min-h-screen flex items-center justify-center bg-white text-slate-900 relative overflow-hidden">
+<section className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-white text-slate-900 relative overflow-hidden">
 {/* Background Pattern */}
 <div className="absolute inset-0">
 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-100 via-yellow-50 to-blue-100"></div>
@@ -29,37 +33,34 @@ return (
 <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,165,0,0.1)_1px,transparent_0)] bg-[length:20px_20px]"></div>
 </div>
 
-<div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-{/* Left Content */}
-<div className="text-center lg:text-left">
+<div className="max-w-7xl mx-auto px-4 py-16 text-center relative z-10">
+{/* Main Content */}
+<div className="max-w-4xl mx-auto">
 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight">
 Interfaz Didáctica
 </h1>
-<p className="text-xl md:text-2xl text-slate-600 mb-8 max-w-2xl lg:max-w-none">
+<p className="text-xl md:text-2xl text-slate-600 mb-8 max-w-2xl mx-auto">
 Especialistas en la Gestión y Capacitación del Talento Humano
 </p>
-<p className="text-lg text-slate-500 mb-8 max-w-xl lg:max-w-none">
+<p className="text-lg text-slate-500 mb-8 max-w-xl mx-auto">
 Transformamos organizaciones a través del desarrollo del talento humano con
 soluciones de capacitación innovadoras y efectivas.
 </p>
-<div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+<div className="flex flex-col sm:flex-row gap-4 justify-center">
+<button
+onClick={openContactModal}
+className="bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg"
+>
+Solicitar Consulta Gratuita
+</button>
 <Link
 href="/cursos"
-className="bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg"
+className="border-2 border-slate-300 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-lg"
 >
 Explorar Cursos
 </Link>
-<Link
-href="/nosotros"
-className="border-2 border-slate-300 text-slate-700 px-8 py-4 rounded-xl font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 text-lg"
->
-Conoce Más
-</Link>
 </div>
 </div>
-
-{/* Right Content - CTA Form */}
-<HeroForm />
 </div>
 
 {/* Scroll Indicator */}

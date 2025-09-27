@@ -5,7 +5,11 @@ import { useState } from 'react';
 import { siteNav } from '@/data/site';
 import { Logo } from './Logo';
 
-export function Header() {
+interface HeaderProps {
+onContactClick?: () => void;
+}
+
+export function Header({ onContactClick }: HeaderProps) {
 const pathname = usePathname();
 const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -74,6 +78,27 @@ active
 
 {/* CTA Button */}
 <div className="hidden md:block">
+{onContactClick ? (
+<button
+onClick={onContactClick}
+className="bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2"
+>
+Contactar
+<svg
+className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+fill="none"
+stroke="currentColor"
+viewBox="0 0 24 24"
+>
+<path
+strokeLinecap="round"
+strokeLinejoin="round"
+strokeWidth={2}
+d="M13 7l5 5m0 0l-5 5m5-5H6"
+/>
+</svg>
+</button>
+) : (
 <Link
 href="/contacto"
 className="bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2"
@@ -93,6 +118,7 @@ d="M13 7l5 5m0 0l-5 5m5-5H6"
 />
 </svg>
 </Link>
+)}
 </div>
 
 {/* Mobile Menu Button */}
@@ -147,10 +173,34 @@ active
 );
 })}
 <div className="pt-2">
+{onContactClick ? (
+<button
+onClick={() => {
+onContactClick();
+setIsMenuOpen(false);
+}}
+className="w-full bg-orange-600 text-white px-4 py-3 rounded-xl font-semibold text-center hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+>
+Contactar
+<svg
+className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+fill="none"
+stroke="currentColor"
+viewBox="0 0 24 24"
+>
+<path
+strokeLinecap="round"
+strokeLinejoin="round"
+strokeWidth={2}
+d="M13 7l5 5m0 0l-5 5m5-5H6"
+/>
+</svg>
+</button>
+) : (
 <Link
 href="/contacto"
 onClick={() => setIsMenuOpen(false)}
-className="block w-full bg-orange-600 text-white px-4 py-3 rounded-xl font-semibold text-center hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+className="w-full bg-orange-600 text-white px-4 py-3 rounded-xl font-semibold text-center hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
 >
 Contactar
 <svg
@@ -167,6 +217,7 @@ d="M13 7l5 5m0 0l-5 5m5-5H6"
 />
 </svg>
 </Link>
+)}
 </div>
 </nav>
 </div>
