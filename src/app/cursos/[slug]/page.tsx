@@ -2,11 +2,12 @@ import { getCourseBySlug, categories, modalities } from "@/data/site";
 import { notFound } from "next/navigation";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
-export default function Page({ params }: Props) {
-  const course = getCourseBySlug(params.slug);
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
+  const course = getCourseBySlug(slug);
   if (!course) return notFound();
   const category = categories.find((c) => c.slug === course.categorySlug)?.name;
   const modalityNames = course.modalitySlugs
@@ -39,5 +40,3 @@ export default function Page({ params }: Props) {
     </article>
   );
 }
-
-

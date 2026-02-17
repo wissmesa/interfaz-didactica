@@ -1,12 +1,10 @@
 import Link from "next/link";
 import { categories, courses } from "@/data/site";
 import { CourseCard } from "@/components/CourseCard";
-import { Suspense } from "react";
 
-function CoursesGrid({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-  const category = typeof searchParams.categoria === "string" ? searchParams.categoria : undefined;
-  const list = category ? courses.filter((c) => c.categorySlug === category) : courses;
-  const selectedCategory = categories.find((c) => c.slug === category);
+function CoursesGrid({ categoria }: { categoria?: string }) {
+  const list = categoria ? courses.filter((c) => c.categorySlug === categoria) : courses;
+  const selectedCategory = categories.find((c) => c.slug === categoria);
 
   return (
     <div className="space-y-6">
@@ -35,12 +33,13 @@ function CoursesGrid({ searchParams }: { searchParams: Record<string, string | s
   );
 }
 
-export default function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-  return (
-    <Suspense>
-      <CoursesGrid searchParams={searchParams} />
-    </Suspense>
-  );
+type Props = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function Page({ searchParams }: Props) {
+  const params = await searchParams;
+  const categoria = typeof params.categoria === "string" ? params.categoria : undefined;
+
+  return <CoursesGrid categoria={categoria} />;
 }
-
-
