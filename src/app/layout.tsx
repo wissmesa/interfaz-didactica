@@ -1,36 +1,31 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { ClientLayout } from '@/components/ClientLayout';
 
-const geistSans = Geist({
-variable: '--font-geist-sans',
-subsets: ['latin']
-});
-
-const geistMono = Geist_Mono({
-variable: '--font-geist-mono',
-subsets: ['latin']
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-title: 'Interfaz Didáctica',
-description: 'Especialistas en la Gestión y Capacitación del Talento Humano',
-metadataBase: new URL('https://www.interfazdidactica.com/')
+  title: 'Interfaz Didáctica | Formación Integral para Empresas',
+  description:
+    'Especialistas en Ofimática, Atención al Cliente y Desarrollo Gerencial. Soluciones a medida para empresas con más de 17 años de trayectoria en Caracas.',
+  metadataBase: new URL('https://www.interfazdidactica.com/'),
 };
 
 export default function RootLayout({
-children
+  children,
 }: Readonly<{
-children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-return (
-<html lang="es">
-<body
-className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 text-slate-900`}
->
-<ClientLayout>{children}</ClientLayout>
-</body>
-</html>
-);
+  return (
+    <html lang="es">
+      <body className={`${inter.variable} antialiased bg-white text-foreground font-sans`}>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
+    </html>
+  );
 }
