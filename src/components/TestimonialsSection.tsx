@@ -36,7 +36,7 @@ Experiencias reales de organizaciones que han transformado su talento humano
 <StarRating rating={testimonial.rating} />
 </div>
 <blockquote className="text-slate-700 mb-6 italic">
-"{testimonial.content}"
+&ldquo;{testimonial.content}&rdquo;
 </blockquote>
 <div className="border-t pt-4">
 <div className="font-semibold text-slate-900">{testimonial.name}</div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { categories, courses } from "@/data/site";
 import { CourseCard } from "@/components/CourseCard";
 import { Suspense } from "react";
@@ -13,15 +14,15 @@ function CoursesGrid({ searchParams }: { searchParams: Record<string, string | s
         <h1 className="text-2xl font-semibold">Cursos {selectedCategory ? `· ${selectedCategory.name}` : ""}</h1>
       </div>
       <div className="flex flex-wrap gap-2">
-        <a href="/cursos" className={!selectedCategory ? "px-3 py-1 rounded-full bg-indigo-600 text-white text-sm" : "px-3 py-1 rounded-full bg-white border text-sm"}>Todos</a>
+        <Link href="/cursos" className={!selectedCategory ? "px-3 py-1 rounded-full bg-indigo-600 text-white text-sm" : "px-3 py-1 rounded-full bg-white border text-sm"}>Todos</Link>
         {categories.map((cat) => (
-          <a
+          <Link
             key={cat.slug}
             href={`/cursos?categoria=${cat.slug}`}
             className={selectedCategory?.slug === cat.slug ? "px-3 py-1 rounded-full bg-indigo-600 text-white text-sm" : "px-3 py-1 rounded-full bg-white border text-sm"}
           >
             {cat.name}
-          </a>
+          </Link>
         ))}
       </div>
 
