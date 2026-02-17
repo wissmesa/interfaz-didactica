@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "mongoose": "^8.18.1",
+    "@neondatabase/serverless": "^1.0.2",
     "next": "15.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0"
