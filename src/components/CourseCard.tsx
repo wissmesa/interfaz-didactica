@@ -1,18 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Course, categories, modalities } from "@/data/site";
+
+export type CourseCardData = {
+  slug: string;
+  title: string;
+  excerpt?: string | null;
+  hours?: number | null;
+  image?: string | null;
+  category_slug?: string | null;
+  category_name?: string | null;
+  modality_slugs?: string[] | null;
+  modality_names?: string;
+};
 
 type Props = {
-  course: Course;
+  course: CourseCardData;
 };
 
 export function CourseCard({ course }: Props) {
-  const category = categories.find((c) => c.slug === course.categorySlug);
-  const modalityNames = course.modalitySlugs
-    .map((slug) => modalities.find((m) => m.slug === slug)?.name)
-    .filter(Boolean)
-    .join(" · ");
-
   return (
     <div className="rounded-lg border bg-white shadow-sm overflow-hidden">
       <div className="relative h-40 w-full bg-slate-100">
@@ -28,7 +33,7 @@ export function CourseCard({ course }: Props) {
       </div>
       <div className="p-4">
         <div className="mb-1 text-xs text-slate-500">
-          {category?.name} {course.hours ? `· ${course.hours}h` : ""}
+          {course.category_name || course.category_slug || ''} {course.hours ? `· ${course.hours}h` : ""}
         </div>
         <h3 className="text-base font-semibold text-slate-900 line-clamp-2">
           {course.title}
@@ -39,8 +44,8 @@ export function CourseCard({ course }: Props) {
           </p>
         ) : null}
         <div className="mt-3 flex items-center justify-between">
-          <div className="text-xs text-slate-500 truncate" title={modalityNames}>
-            {modalityNames}
+          <div className="text-xs text-slate-500 truncate" title={course.modality_names || ''}>
+            {course.modality_names || ''}
           </div>
           <Link
             href={`/cursos/${course.slug}`}
@@ -53,5 +58,3 @@ export function CourseCard({ course }: Props) {
     </div>
   );
 }
-
-

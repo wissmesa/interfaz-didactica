@@ -2,16 +2,31 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
 areasFormacion,
 modalidadesEstudio,
 heroImage,
 landingStats,
 porQueElegirnos,
-testimonials
 } from '@/data/site';
 import { useContact } from '@/components/ClientLayout';
+
+type DbTestimonial = {
+  id: number;
+  name: string;
+  position: string | null;
+  company: string | null;
+  content: string;
+  rating: number;
+  initials: string | null;
+};
+
+type DbCompany = {
+  id: number;
+  name: string;
+  logo_url: string | null;
+};
 
 /* ── SVG Icon Components ── */
 
@@ -264,6 +279,8 @@ virtual: VirtualIcon
 
 export default function Home() {
 const { openContactModal } = useContact();
+const [testimonials, setTestimonials] = useState<DbTestimonial[]>([]);
+const [companies, setCompanies] = useState<DbCompany[]>([]);
 const [formData, setFormData] = useState({
 fullName: '',
 email: '',
@@ -275,6 +292,17 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>(
 'idle'
 );
+
+useEffect(() => {
+  fetch('/api/testimonials')
+    .then((res) => res.json())
+    .then((data) => setTestimonials(data.testimonials || []))
+    .catch(() => {});
+  fetch('/api/companies')
+    .then((res) => res.json())
+    .then((data) => setCompanies(data.companies || []))
+    .catch(() => {});
+}, []);
 
 const handleChange = (
 e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -650,12 +678,28 @@ viewBox="0 0 20 20"
 ))}
 </div>
 
-{/* Logo placeholders */}
+{/* Company logos */}
+{companies.length > 0 ? (
+<div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+{companies.map((c) =>
+  c.logo_url ? (
+    <div key={c.id} className="w-28 h-10 relative grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+      <Image src={c.logo_url} alt={c.name} fill className="object-contain" sizes="112px" />
+    </div>
+  ) : (
+    <div key={c.id} className="px-4 py-2 text-sm font-medium text-slate-400 border border-slate-200 rounded-lg">
+      {c.name}
+    </div>
+  )
+)}
+</div>
+) : (
 <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-30">
 {Array.from({ length: 6 }).map((_, i) => (
 <div key={i} className="w-28 h-10 bg-slate-300 rounded-md" aria-hidden="true" />
 ))}
 </div>
+)}
 </div>
 </section>
 

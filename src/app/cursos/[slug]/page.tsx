@@ -1,4 +1,4 @@
-import { getCourseBySlug, categories, modalities } from "@/data/site";
+import { sql } from "@/lib/db";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -7,17 +7,23 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const course = getCourseBySlug(slug);
-  if (!course) return notFound();
-  const category = categories.find((c) => c.slug === course.categorySlug)?.name;
-  const modalityNames = course.modalitySlugs
-    .map((s) => modalities.find((m) => m.slug === s)?.name)
-    .filter(Boolean)
-    .join(" · ");
+
+  const rows = await sql`
+    SELECT c.*, cat.name as category_name,
+      (SELECT json_agg(m.name) FROM course_modalities cm JOIN modalities m ON m.slug = cm.modality_slug WHERE cm.course_id = c.id) as modality_names
+    FROM courses c
+    LEFT JOIN categories cat ON cat.slug = c.category_slug
+    WHERE c.slug = ${slug} AND c.active = true
+  `;
+
+  if (rows.length === 0) return notFound();
+
+  const course = rows[0];
+  const modalityNames = (course.modality_names as string[] | null)?.join(" · ") || "";
 
   return (
     <article className="prose prose-slate max-w-none">
-      <p className="text-sm text-slate-500">{category}</p>
+      <p className="text-sm text-slate-500">{course.category_name}</p>
       <h1 className="mb-2">{course.title}</h1>
       {course.hours ? (
         <p className="text-sm text-slate-500">Duración: {course.hours} horas</p>
