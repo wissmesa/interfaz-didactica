@@ -38,18 +38,8 @@ export async function PUT(request: NextRequest, context: RouteContext) {
     }
     const currentStatus = currentRows[0].status;
 
-    const {
-      name,
-      lastname,
-      email,
-      company,
-      phone,
-      interest,
-      message,
-      notes,
-      status,
-      source,
-    } = body;
+    const { name, lastname, email, company, phone, interest, message, notes, status, source } =
+      body;
 
     const rows = await sql`
       UPDATE leads SET

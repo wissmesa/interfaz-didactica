@@ -43,23 +43,21 @@ export default async function Page({ params }: Props) {
     LIMIT 3
   `;
 
-  const relatedCourses: CourseCardData[] = relatedRaw.map(
-    (c: Record<string, unknown>) => ({
-      slug: c.slug as string,
-      title: c.title as string,
-      excerpt: c.excerpt as string | null,
-      hours: c.hours as number | null,
-      image: c.image as string | null,
-      category_slug: c.category_slug as string | null,
-      category_name: c.category_name as string | null,
-      modality_names: c.modality_names as string,
-    })
-  );
+  const relatedCourses: CourseCardData[] = relatedRaw.map((c: Record<string, unknown>) => ({
+    slug: c.slug as string,
+    title: c.title as string,
+    excerpt: c.excerpt as string | null,
+    hours: c.hours as number | null,
+    image: c.image as string | null,
+    category_slug: c.category_slug as string | null,
+    category_name: c.category_name as string | null,
+    modality_names: c.modality_names as string,
+  }));
 
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero Banner */}
-      <section className="relative h-[320px] md:h-[400px] overflow-hidden">
+      <section className="relative h-[320px] overflow-hidden md:h-[400px]">
         <Image
           src={imageUrl}
           alt={course.title as string}
@@ -68,43 +66,77 @@ export default async function Page({ params }: Props) {
           sizes="100vw"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/70 to-brand-navy/30" />
+        <div className="from-brand-navy via-brand-navy/70 to-brand-navy/30 absolute inset-0 bg-gradient-to-t" />
 
         <div className="absolute inset-0 flex items-end">
-          <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pb-10 md:pb-14">
+          <div className="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 md:pb-14 lg:px-8">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-white/60 mb-4">
-              <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <nav className="mb-4 flex items-center gap-2 text-sm text-white/60">
+              <Link href="/" className="transition-colors hover:text-white">
+                Inicio
+              </Link>
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
-              <Link href="/cursos" className="hover:text-white transition-colors">Cursos</Link>
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <Link href="/cursos" className="transition-colors hover:text-white">
+                Cursos
+              </Link>
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
-              <span className="text-white/90 font-medium truncate max-w-[200px]">
+              <span className="max-w-[200px] truncate font-medium text-white/90">
                 {course.title as string}
               </span>
             </nav>
 
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight max-w-4xl">
+            <h1 className="max-w-4xl text-2xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
               {course.title as string}
             </h1>
 
             {/* Info badges */}
-            <div className="flex flex-wrap items-center gap-3 mt-4">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               {course.category_name && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/15 text-white backdrop-blur-sm">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" />
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-white/15 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
+                  <svg
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+                    />
                   </svg>
                   {course.category_name as string}
                 </span>
               )}
               {course.hours && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-orange/80 text-white backdrop-blur-sm">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <span className="bg-brand-orange/80 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
+                  <svg
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   {course.hours as number} horas
                 </span>
@@ -112,10 +144,20 @@ export default async function Page({ params }: Props) {
               {modalities.map((m) => (
                 <span
                   key={m as string}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/15 text-white backdrop-blur-sm"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-white/15 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm"
                 >
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  <svg
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
                   </svg>
                   {m as string}
                 </span>
@@ -126,19 +168,19 @@ export default async function Page({ params }: Props) {
       </section>
 
       {/* Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 md:py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12">
           {/* Main content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="space-y-8 lg:col-span-2">
             {/* Description */}
             {course.description && (
               <div>
-                <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                  <span className="w-1 h-6 bg-brand-orange rounded-full" />
+                <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
+                  <span className="bg-brand-orange h-6 w-1 rounded-full" />
                   Descripción del Curso
                 </h2>
                 <div className="prose prose-slate max-w-none">
-                  <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                  <p className="leading-relaxed whitespace-pre-line text-slate-600">
                     {course.description as string}
                   </p>
                 </div>
@@ -147,16 +189,26 @@ export default async function Page({ params }: Props) {
 
             {/* Requirements */}
             {course.requirements && (
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-6">
-                <h2 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-100 text-amber-600">
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <div className="rounded-2xl border border-slate-200/80 bg-white p-6">
+                <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-slate-900">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
+                    <svg
+                      className="h-4.5 w-4.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                   </span>
                   Requisitos
                 </h2>
-                <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                <p className="leading-relaxed whitespace-pre-line text-slate-600">
                   {course.requirements as string}
                 </p>
               </div>
@@ -164,16 +216,26 @@ export default async function Page({ params }: Props) {
 
             {/* Audience */}
             {course.audience && (
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-6">
-                <h2 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-600">
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <div className="rounded-2xl border border-slate-200/80 bg-white p-6">
+                <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-slate-900">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                    <svg
+                      className="h-4.5 w-4.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
                     </svg>
                   </span>
                   Dirigido a
                 </h2>
-                <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                <p className="leading-relaxed whitespace-pre-line text-slate-600">
                   {course.audience as string}
                 </p>
               </div>
@@ -184,17 +246,18 @@ export default async function Page({ params }: Props) {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
               {/* CTA Card */}
-              <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-900 mb-2">
+              <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+                <h3 className="mb-2 text-lg font-bold text-slate-900">
                   ¿Interesado en este curso?
                 </h3>
-                <p className="text-sm text-slate-500 mb-5">
-                  Solicita información sin compromiso y diseñamos un programa a la medida de tu equipo.
+                <p className="mb-5 text-sm text-slate-500">
+                  Solicita información sin compromiso y diseñamos un programa a la medida de tu
+                  equipo.
                 </p>
-                <CourseCtaButton className="w-full bg-brand-orange text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-brand-orange-hover transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer" />
+                <CourseCtaButton className="bg-brand-orange hover:bg-brand-orange-hover w-full cursor-pointer rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:shadow-md" />
                 <Link
                   href="/cursos"
-                  className="mt-3 w-full inline-flex items-center justify-center gap-1.5 px-6 py-3 rounded-xl text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors"
+                  className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-200"
                 >
                   Ver más cursos
                 </Link>
@@ -202,40 +265,74 @@ export default async function Page({ params }: Props) {
 
               {/* Quick info card */}
               <div className="bg-brand-navy/5 rounded-2xl p-6">
-                <h3 className="text-sm font-bold text-brand-navy mb-4 uppercase tracking-wider">
+                <h3 className="text-brand-navy mb-4 text-sm font-bold tracking-wider uppercase">
                   Detalles del curso
                 </h3>
                 <ul className="space-y-3">
                   {course.category_name && (
                     <li className="flex items-start gap-3 text-sm">
-                      <svg className="w-4.5 h-4.5 text-brand-orange shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" />
+                      <svg
+                        className="text-brand-orange mt-0.5 h-4.5 w-4.5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+                        />
                       </svg>
                       <div>
-                        <span className="text-slate-400 block text-xs">Categoría</span>
-                        <span className="text-slate-700 font-medium">{course.category_name as string}</span>
+                        <span className="block text-xs text-slate-400">Categoría</span>
+                        <span className="font-medium text-slate-700">
+                          {course.category_name as string}
+                        </span>
                       </div>
                     </li>
                   )}
                   {course.hours && (
                     <li className="flex items-start gap-3 text-sm">
-                      <svg className="w-4.5 h-4.5 text-brand-orange shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        className="text-brand-orange mt-0.5 h-4.5 w-4.5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                       <div>
-                        <span className="text-slate-400 block text-xs">Duración</span>
-                        <span className="text-slate-700 font-medium">{course.hours as number} horas</span>
+                        <span className="block text-xs text-slate-400">Duración</span>
+                        <span className="font-medium text-slate-700">
+                          {course.hours as number} horas
+                        </span>
                       </div>
                     </li>
                   )}
                   {modalities.length > 0 && (
                     <li className="flex items-start gap-3 text-sm">
-                      <svg className="w-4.5 h-4.5 text-brand-orange shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      <svg
+                        className="text-brand-orange mt-0.5 h-4.5 w-4.5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                        />
                       </svg>
                       <div>
-                        <span className="text-slate-400 block text-xs">Modalidades</span>
-                        <span className="text-slate-700 font-medium">{modalities.join(', ')}</span>
+                        <span className="block text-xs text-slate-400">Modalidades</span>
+                        <span className="font-medium text-slate-700">{modalities.join(', ')}</span>
                       </div>
                     </li>
                   )}
@@ -247,22 +344,25 @@ export default async function Page({ params }: Props) {
 
         {/* Related courses */}
         {relatedCourses.length > 0 && (
-          <section className="mt-16 pt-12 border-t border-slate-200">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-slate-900">
-                Cursos relacionados
-              </h2>
+          <section className="mt-16 border-t border-slate-200 pt-12">
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-slate-900">Cursos relacionados</h2>
               <Link
                 href={`/cursos?categoria=${course.category_slug}`}
-                className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange hover:text-brand-orange-hover transition-colors"
+                className="text-brand-orange hover:text-brand-orange-hover hidden items-center gap-1.5 text-sm font-semibold transition-colors sm:inline-flex"
               >
                 Ver todos
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
               {relatedCourses.map((rc) => (
                 <CourseCard key={rc.slug} course={rc} />
               ))}

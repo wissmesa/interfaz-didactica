@@ -16,10 +16,14 @@ export async function POST(_request: NextRequest, context: RouteContext) {
     const lead = leadRows[0];
 
     if (lead.converted_to_contact_id) {
-      return NextResponse.json({ error: 'Este lead ya fue convertido a contacto' }, { status: 409 });
+      return NextResponse.json(
+        { error: 'Este lead ya fue convertido a contacto' },
+        { status: 409 }
+      );
     }
 
-    const existing = await sql`SELECT id FROM contacts WHERE email = ${(lead.email as string).toLowerCase()}`;
+    const existing =
+      await sql`SELECT id FROM contacts WHERE email = ${(lead.email as string).toLowerCase()}`;
     if (existing.length > 0) {
       await sql`UPDATE leads SET converted_to_contact_id = ${existing[0].id}, updated_at = now() WHERE id = ${leadId}`;
       return NextResponse.json({

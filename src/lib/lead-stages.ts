@@ -66,9 +66,7 @@ export const LEAD_STAGES: LeadStage[] = [
   },
 ];
 
-export const STAGE_MAP = Object.fromEntries(
-  LEAD_STAGES.map((s) => [s.key, s])
-);
+export const STAGE_MAP = Object.fromEntries(LEAD_STAGES.map((s) => [s.key, s]));
 
 export function getStage(key: string): LeadStage {
   return STAGE_MAP[key] || LEAD_STAGES[0];

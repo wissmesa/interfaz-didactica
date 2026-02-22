@@ -19,15 +19,20 @@ export async function POST(request: NextRequest) {
     const { name, position, company, content, rating, initials, active, sortOrder } = body;
 
     if (!name || !content) {
-      return NextResponse.json(
-        { error: 'Nombre y contenido son requeridos' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Nombre y contenido son requeridos' }, { status: 400 });
     }
 
     const rows = await sql`
       INSERT INTO testimonials (name, position, company, content, rating, initials, active, sort_order)
-      VALUES (${name}, ${position || null}, ${company || null}, ${content}, ${rating || 5}, ${initials || name.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2)}, ${active !== false}, ${sortOrder || 0})
+      VALUES (${name}, ${position || null}, ${company || null}, ${content}, ${rating || 5}, ${
+        initials ||
+        name
+          .split(' ')
+          .map((w: string) => w[0])
+          .join('')
+          .toUpperCase()
+          .slice(0, 2)
+      }, ${active !== false}, ${sortOrder || 0})
       RETURNING *
     `;
 

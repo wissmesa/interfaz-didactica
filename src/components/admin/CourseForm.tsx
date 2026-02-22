@@ -89,9 +89,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
     setError('');
 
     try {
-      const url = isEditing
-        ? `/api/admin/courses/${course!.id}`
-        : '/api/admin/courses';
+      const url = isEditing ? `/api/admin/courses/${course!.id}` : '/api/admin/courses';
       const method = isEditing ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
@@ -129,11 +127,9 @@ export function CourseForm({ course }: { course?: CourseData }) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Título *
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Título *</label>
           <input
             type="text"
             name="title"
@@ -147,9 +143,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Slug *
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Slug *</label>
           <div className="flex gap-2">
             <input
               type="text"
@@ -163,7 +157,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
             <button
               type="button"
               onClick={generateSlug}
-              className="px-3 py-2 text-xs font-medium text-brand-navy bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors whitespace-nowrap"
+              className="text-brand-navy rounded-lg bg-slate-100 px-3 py-2 text-xs font-medium whitespace-nowrap transition-colors hover:bg-slate-200"
             >
               Auto
             </button>
@@ -171,9 +165,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Extracto
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Extracto</label>
           <input
             type="text"
             name="excerpt"
@@ -185,9 +177,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Descripción
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Descripción</label>
           <textarea
             name="description"
             value={form.description}
@@ -199,9 +189,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Horas
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Horas</label>
           <input
             type="number"
             name="hours"
@@ -213,9 +201,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Categoría
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Categoría</label>
           <select
             name="categorySlug"
             value={form.categorySlug}
@@ -232,19 +218,17 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Modalidades
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Modalidades</label>
           <div className="flex flex-wrap gap-2">
             {MODALITIES.map((mod) => (
               <button
                 key={mod.slug}
                 type="button"
                 onClick={() => handleModalityToggle(mod.slug)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
+                className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors ${
                   form.modalitySlugs.includes(mod.slug)
-                    ? 'bg-brand-navy text-white border-brand-navy'
-                    : 'bg-white text-slate-600 border-slate-300 hover:border-slate-400'
+                    ? 'bg-brand-navy border-brand-navy text-white'
+                    : 'border-slate-300 bg-white text-slate-600 hover:border-slate-400'
                 }`}
               >
                 {mod.name}
@@ -254,9 +238,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Requisitos
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Requisitos</label>
           <input
             type="text"
             name="requirements"
@@ -268,9 +250,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Dirigido a
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Dirigido a</label>
           <input
             type="text"
             name="audience"
@@ -282,9 +262,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            URL de Imagen
-          </label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">URL de Imagen</label>
           <input
             type="text"
             name="image"
@@ -296,13 +274,13 @@ export function CourseForm({ course }: { course?: CourseData }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="flex items-center gap-3 cursor-pointer">
+          <label className="flex cursor-pointer items-center gap-3">
             <input
               type="checkbox"
               name="featured"
               checked={form.featured}
               onChange={handleChange}
-              className="w-4 h-4 rounded border-slate-300 text-brand-navy focus:ring-brand-navy"
+              className="text-brand-navy focus:ring-brand-navy h-4 w-4 rounded border-slate-300"
             />
             <span className="text-sm font-medium text-slate-700">Curso destacado</span>
           </label>
@@ -310,7 +288,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
           {error}
         </div>
       )}
@@ -319,7 +297,7 @@ export function CourseForm({ course }: { course?: CourseData }) {
         <button
           type="submit"
           disabled={saving}
-          className="bg-brand-navy text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-brand-navy-light transition-colors disabled:opacity-50"
+          className="bg-brand-navy hover:bg-brand-navy-light rounded-lg px-6 py-2.5 text-sm font-semibold text-white transition-colors disabled:opacity-50"
         >
           {saving ? 'Guardando...' : isEditing ? 'Guardar Cambios' : 'Crear Curso'}
         </button>

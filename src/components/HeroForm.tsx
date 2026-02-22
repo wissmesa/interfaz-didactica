@@ -20,17 +20,13 @@ export function HeroForm() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    'idle' | 'success' | 'error'
-  >('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -84,38 +80,31 @@ export function HeroForm() {
 
   if (submitStatus === 'success') {
     return (
-      <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-2xl text-center">
-        <div className="text-6xl mb-4">✅</div>
-        <h2 className="text-2xl font-bold mb-2 text-slate-900">
-          ¡Gracias por contactarnos!
-        </h2>
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-2xl">
+        <div className="mb-4 text-6xl">✅</div>
+        <h2 className="mb-2 text-2xl font-bold text-slate-900">¡Gracias por contactarnos!</h2>
         <p className="text-slate-600">
-          Hemos recibido tu solicitud. Uno de nuestros especialistas se pondrá
-          en contacto contigo en las próximas 24 horas.
+          Hemos recibido tu solicitud. Uno de nuestros especialistas se pondrá en contacto contigo
+          en las próximas 24 horas.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-2xl">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold mb-2 text-slate-900">
+    <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xl">
+      <div className="mb-6 text-center">
+        <h2 className="mb-2 text-2xl font-bold text-slate-900">
           ¿Listo para Transformar tu Equipo?
         </h2>
-        <p className="text-slate-600">
-          Obtén una consulta gratuita personalizada
-        </p>
+        <p className="text-slate-600">Obtén una consulta gratuita personalizada</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Nombre y Apellido en la misma línea */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-slate-700 mb-2"
-            >
+            <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-700">
               Nombre *
             </label>
             <input
@@ -125,16 +114,13 @@ export function HeroForm() {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-500 transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none"
               placeholder="Tu nombre"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="lastname"
-              className="block text-sm font-medium text-slate-700 mb-2"
-            >
+            <label htmlFor="lastname" className="mb-2 block text-sm font-medium text-slate-700">
               Apellido *
             </label>
             <input
@@ -144,17 +130,14 @@ export function HeroForm() {
               value={formData.lastname}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-500 transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none"
               placeholder="Tu apellido"
             />
           </div>
         </div>
 
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-slate-700 mb-2"
-          >
+          <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">
             Correo electrónico *
           </label>
           <input
@@ -164,16 +147,13 @@ export function HeroForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-500 transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none"
             placeholder="tu@email.com"
           />
         </div>
 
         <div>
-          <label
-            htmlFor="phone"
-            className="block text-sm font-medium text-slate-700 mb-2"
-          >
+          <label htmlFor="phone" className="mb-2 block text-sm font-medium text-slate-700">
             Teléfono *
           </label>
           <input
@@ -183,16 +163,13 @@ export function HeroForm() {
             value={formData.phone}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-500 transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none"
             placeholder="+1 (555) 123-4567"
           />
         </div>
 
         <div>
-          <label
-            htmlFor="message"
-            className="block text-sm font-medium text-slate-700 mb-2"
-          >
+          <label htmlFor="message" className="mb-2 block text-sm font-medium text-slate-700">
             Mensaje (opcional)
           </label>
           <textarea
@@ -201,26 +178,25 @@ export function HeroForm() {
             value={formData.message}
             onChange={handleChange}
             rows={3}
-            className="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 resize-none"
+            className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-500 transition-all duration-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none"
             placeholder="Cuéntanos sobre tus necesidades específicas..."
           ></textarea>
         </div>
 
         {submitStatus === 'error' && (
-          <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-3 text-red-200 text-sm">
-            Hubo un error al enviar el formulario. Por favor, intenta
-            nuevamente.
+          <div className="rounded-lg border border-red-500/50 bg-red-500/20 p-3 text-sm text-red-200">
+            Hubo un error al enviar el formulario. Por favor, intenta nuevamente.
           </div>
         )}
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-orange-600 text-white py-4 px-6 rounded-xl font-semibold hover:bg-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          className="flex w-full items-center justify-center rounded-xl bg-orange-600 px-6 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-orange-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isSubmitting ? (
             <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+              <div className="mr-2 h-5 w-5 animate-spin rounded-full border-b-2 border-white"></div>
               Enviando...
             </>
           ) : (
@@ -231,8 +207,7 @@ export function HeroForm() {
 
       <div className="mt-4 text-center">
         <p className="text-xs text-slate-500">
-          Al enviar este formulario, aceptas recibir comunicaciones de Interfaz
-          Didáctica.
+          Al enviar este formulario, aceptas recibir comunicaciones de Interfaz Didáctica.
         </p>
       </div>
     </div>

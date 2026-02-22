@@ -47,8 +47,7 @@ async function getCourses(categorySlug?: string) {
 
 export default async function Page({ searchParams }: Props) {
   const params = await searchParams;
-  const categoria =
-    typeof params.categoria === 'string' ? params.categoria : undefined;
+  const categoria = typeof params.categoria === 'string' ? params.categoria : undefined;
 
   const [categories, coursesRaw, counts] = await Promise.all([
     getCategories(),
@@ -63,9 +62,7 @@ export default async function Page({ searchParams }: Props) {
     totalCourses += row.count as number;
   }
 
-  const selectedCategory = categories.find(
-    (c: Record<string, string>) => c.slug === categoria
-  );
+  const selectedCategory = categories.find((c: Record<string, string>) => c.slug === categoria);
 
   const courses: CourseCardData[] = coursesRaw.map((c: Record<string, unknown>) => ({
     slug: c.slug as string,
@@ -81,44 +78,47 @@ export default async function Page({ searchParams }: Props) {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero */}
-      <section className="relative bg-brand-navy overflow-hidden">
+      <section className="bg-brand-navy relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-          <div className="absolute bottom-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
+          <div className="bg-brand-orange absolute top-0 right-0 h-96 w-96 translate-x-1/3 -translate-y-1/2 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 h-72 w-72 -translate-x-1/4 translate-y-1/2 rounded-full bg-white blur-3xl" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-          <nav className="flex items-center gap-2 text-sm text-white/60 mb-6">
-            <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <nav className="mb-6 flex items-center gap-2 text-sm text-white/60">
+            <Link href="/" className="transition-colors hover:text-white">
+              Inicio
+            </Link>
+            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-            <span className="text-white/90 font-medium">Cursos</span>
+            <span className="font-medium text-white/90">Cursos</span>
           </nav>
 
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
             Catálogo de Cursos
           </h1>
-          <p className="mt-3 text-lg text-white/70 max-w-2xl">
-            {totalCourses} programas de formación diseñados para potenciar
-            el talento de tu equipo.
+          <p className="mt-3 max-w-2xl text-lg text-white/70">
+            {totalCourses} programas de formación diseñados para potenciar el talento de tu equipo.
           </p>
         </div>
       </section>
 
       {/* Filters + Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
         {/* Category filters */}
-        <div className="flex flex-wrap items-center gap-2 mb-8">
+        <div className="mb-8 flex flex-wrap items-center gap-2">
           <Link
             href="/cursos"
-            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
               !selectedCategory
                 ? 'bg-brand-orange text-white shadow-sm'
-                : 'bg-white text-slate-600 border border-slate-200 hover:border-brand-orange hover:text-brand-orange'
+                : 'hover:border-brand-orange hover:text-brand-orange border border-slate-200 bg-white text-slate-600'
             }`}
           >
             Todos
-            <span className={`text-xs font-bold ${!selectedCategory ? 'text-white/80' : 'text-slate-400'}`}>
+            <span
+              className={`text-xs font-bold ${!selectedCategory ? 'text-white/80' : 'text-slate-400'}`}
+            >
               {totalCourses}
             </span>
           </Link>
@@ -130,14 +130,16 @@ export default async function Page({ searchParams }: Props) {
               <Link
                 key={cat.slug}
                 href={`/cursos?categoria=${cat.slug}`}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
                   isActive
                     ? 'bg-brand-orange text-white shadow-sm'
-                    : 'bg-white text-slate-600 border border-slate-200 hover:border-brand-orange hover:text-brand-orange'
+                    : 'hover:border-brand-orange hover:text-brand-orange border border-slate-200 bg-white text-slate-600'
                 }`}
               >
                 {cat.name}
-                <span className={`text-xs font-bold ${isActive ? 'text-white/80' : 'text-slate-400'}`}>
+                <span
+                  className={`text-xs font-bold ${isActive ? 'text-white/80' : 'text-slate-400'}`}
+                >
                   {count}
                 </span>
               </Link>
@@ -146,28 +148,44 @@ export default async function Page({ searchParams }: Props) {
         </div>
 
         {/* Results count */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <p className="text-sm text-slate-500">
             <span className="font-semibold text-slate-700">{courses.length}</span>{' '}
             {courses.length === 1 ? 'curso encontrado' : 'cursos encontrados'}
             {selectedCategory && (
-              <> en <span className="font-medium text-brand-navy">{(selectedCategory as Record<string, string>).name}</span></>
+              <>
+                {' '}
+                en{' '}
+                <span className="text-brand-navy font-medium">
+                  {(selectedCategory as Record<string, string>).name}
+                </span>
+              </>
             )}
           </p>
         </div>
 
         {/* Grid */}
         {courses.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {courses.map((course) => (
               <CourseCard key={course.slug} course={course} />
             ))}
           </div>
         ) : (
-          <div className="text-center py-20">
-            <div className="mx-auto w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          <div className="py-20 text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+              <svg
+                className="h-8 w-8 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-slate-700">No hay cursos disponibles</h3>
@@ -176,11 +194,16 @@ export default async function Page({ searchParams }: Props) {
             </p>
             <Link
               href="/cursos"
-              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange hover:text-brand-orange-hover transition-colors"
+              className="text-brand-orange hover:text-brand-orange-hover mt-4 inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
             >
               Ver todos los cursos
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </svg>
             </Link>
           </div>

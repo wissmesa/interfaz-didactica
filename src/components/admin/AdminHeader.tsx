@@ -23,7 +23,7 @@ export function AdminHeader() {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6">
+    <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6">
       <div />
       <div className="flex items-center gap-4">
         {userName && (
@@ -33,10 +33,15 @@ export function AdminHeader() {
         )}
         <button
           onClick={handleLogout}
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-red-600 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-slate-500 transition-colors hover:text-red-600"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
           </svg>
           Cerrar sesión
         </button>

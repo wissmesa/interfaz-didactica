@@ -1,36 +1,36 @@
 import { Service } from '@/data/site';
 
 type Props = {
-services: Service[];
+  services: Service[];
 };
 
 export function ServicesSection({ services }: Props) {
-return (
-<section className="py-16 bg-slate-50">
-<div className="max-w-6xl mx-auto px-4">
-<div className="text-center mb-12">
-<h2 className="text-3xl font-bold text-slate-900 mb-4">Nuestros Servicios</h2>
-<p className="text-slate-600 text-lg max-w-2xl mx-auto">
-Ofrecemos soluciones integrales para el desarrollo organizacional y la
-capacitación del talento humano
-</p>
-</div>
+  return (
+    <section className="bg-slate-50 py-16">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-slate-900">Nuestros Servicios</h2>
+          <p className="mx-auto max-w-2xl text-lg text-slate-600">
+            Ofrecemos soluciones integrales para el desarrollo organizacional y la capacitación del
+            talento humano
+          </p>
+        </div>
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-{services.map((service, index) => (
-<div
-key={index}
-className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
->
-<div className="text-4xl mb-4 text-center">{service.icon}</div>
-<h3 className="text-xl font-semibold text-slate-900 mb-3 text-center">
-{service.title}
-</h3>
-<p className="text-slate-600 text-center">{service.description}</p>
-</div>
-))}
-</div>
-</div>
-</section>
-);
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div className="mb-4 text-center text-4xl">{service.icon}</div>
+              <h3 className="mb-3 text-center text-xl font-semibold text-slate-900">
+                {service.title}
+              </h3>
+              <p className="text-center text-slate-600">{service.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

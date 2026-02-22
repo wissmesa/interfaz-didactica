@@ -44,10 +44,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     if (!slug || !title) {
-      return NextResponse.json(
-        { error: 'Slug y título son requeridos' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Slug y título son requeridos' }, { status: 400 });
     }
 
     const rows = await sql`
@@ -73,10 +70,7 @@ export async function POST(request: NextRequest) {
     console.error('Error creating course:', error);
     const pgError = error as { code?: string };
     if (pgError.code === '23505') {
-      return NextResponse.json(
-        { error: 'Ya existe un curso con ese slug' },
-        { status: 409 }
-      );
+      return NextResponse.json({ error: 'Ya existe un curso con ese slug' }, { status: 409 });
     }
     return NextResponse.json({ error: 'Error al crear curso' }, { status: 500 });
   }

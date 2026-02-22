@@ -28,15 +28,13 @@ export function Header({ onContactClick }: HeaderProps) {
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md'
-          : 'bg-white/80 backdrop-blur-sm'
+        scrolled ? 'bg-white/95 shadow-md backdrop-blur-md' : 'bg-white/80 backdrop-blur-sm'
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="shrink-0 group">
+          <Link href="/" className="group shrink-0">
             <Image
               src="/logo.png"
               alt="Interfaz Didáctica C.A."
@@ -48,11 +46,10 @@ export function Header({ onContactClick }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden items-center gap-8 md:flex">
             {siteNav.map((item) => {
               const isAnchor = item.href.startsWith('/#');
-              const isActive =
-                pathname === '/' && isAnchor;
+              const isActive = pathname === '/' && isAnchor;
 
               if (isAnchor && pathname === '/') {
                 return (
@@ -60,9 +57,7 @@ export function Header({ onContactClick }: HeaderProps) {
                     key={item.href}
                     href={item.href.replace('/', '')}
                     className={`text-sm font-medium transition-colors duration-200 ${
-                      isActive
-                        ? 'text-brand-navy'
-                        : 'text-slate-500 hover:text-brand-navy'
+                      isActive ? 'text-brand-navy' : 'hover:text-brand-navy text-slate-500'
                     }`}
                   >
                     {item.label}
@@ -74,7 +69,7 @@ export function Header({ onContactClick }: HeaderProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-sm font-medium text-slate-500 hover:text-brand-navy transition-colors duration-200"
+                  className="hover:text-brand-navy text-sm font-medium text-slate-500 transition-colors duration-200"
                 >
                   {item.label}
                 </Link>
@@ -86,7 +81,7 @@ export function Header({ onContactClick }: HeaderProps) {
           <div className="hidden md:block">
             <button
               onClick={onContactClick}
-              className="bg-brand-orange text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-brand-orange-hover transition-all duration-200 shadow-sm hover:shadow-md"
+              className="bg-brand-orange hover:bg-brand-orange-hover rounded-lg px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:shadow-md"
             >
               Cotizar ahora
             </button>
@@ -95,10 +90,10 @@ export function Header({ onContactClick }: HeaderProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-600 hover:text-brand-navy hover:bg-slate-50 transition-colors duration-200"
+            className="hover:text-brand-navy rounded-lg p-2 text-slate-600 transition-colors duration-200 hover:bg-slate-50 md:hidden"
             aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
                 <path
                   strokeLinecap="round"
@@ -120,11 +115,11 @@ export function Header({ onContactClick }: HeaderProps) {
 
         {/* Mobile Navigation */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen ? 'max-h-80 opacity-100 pb-4' : 'max-h-0 opacity-0'
+          className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+            isMenuOpen ? 'max-h-80 pb-4 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <nav className="flex flex-col gap-1 pt-2 border-t border-slate-100">
+          <nav className="flex flex-col gap-1 border-t border-slate-100 pt-2">
             {siteNav.map((item) => {
               const isAnchor = item.href.startsWith('/#');
 
@@ -134,7 +129,7 @@ export function Header({ onContactClick }: HeaderProps) {
                     key={item.href}
                     href={item.href.replace('/', '')}
                     onClick={handleNavClick}
-                    className="text-sm font-medium text-slate-600 hover:text-brand-navy hover:bg-slate-50 px-3 py-2.5 rounded-lg transition-colors duration-200"
+                    className="hover:text-brand-navy rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors duration-200 hover:bg-slate-50"
                   >
                     {item.label}
                   </a>
@@ -146,7 +141,7 @@ export function Header({ onContactClick }: HeaderProps) {
                   key={item.href}
                   href={item.href}
                   onClick={handleNavClick}
-                  className="text-sm font-medium text-slate-600 hover:text-brand-navy hover:bg-slate-50 px-3 py-2.5 rounded-lg transition-colors duration-200"
+                  className="hover:text-brand-navy rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors duration-200 hover:bg-slate-50"
                 >
                   {item.label}
                 </Link>
@@ -157,7 +152,7 @@ export function Header({ onContactClick }: HeaderProps) {
                 onContactClick?.();
                 setIsMenuOpen(false);
               }}
-              className="mt-2 bg-brand-orange text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-brand-orange-hover transition-colors duration-200 text-center"
+              className="bg-brand-orange hover:bg-brand-orange-hover mt-2 rounded-lg px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors duration-200"
             >
               Cotizar ahora
             </button>

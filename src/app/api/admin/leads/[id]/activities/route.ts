@@ -27,9 +27,6 @@ export async function POST(request: NextRequest, context: RouteContext) {
     return NextResponse.json({ activity: rows[0] }, { status: 201 });
   } catch (error) {
     console.error('Error creating activity:', error);
-    return NextResponse.json(
-      { error: 'Error al crear actividad' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Error al crear actividad' }, { status: 500 });
   }
 }

@@ -19,10 +19,7 @@ export async function POST(request: NextRequest) {
     const { name, logoUrl, website, active, sortOrder } = body;
 
     if (!name) {
-      return NextResponse.json(
-        { error: 'El nombre es requerido' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'El nombre es requerido' }, { status: 400 });
     }
 
     const rows = await sql`

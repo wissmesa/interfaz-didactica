@@ -51,21 +51,21 @@ export default function AdminCursosPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-2 border-brand-navy border-t-transparent" />
+      <div className="flex h-64 items-center justify-center">
+        <div className="border-brand-navy h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
       </div>
     );
   }
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-900">Cursos</h1>
         <Link
           href="/admin/cursos/nuevo"
-          className="inline-flex items-center gap-2 bg-brand-navy text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-brand-navy-light transition-colors"
+          className="bg-brand-navy hover:bg-brand-navy-light inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-colors"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
           Nuevo Curso
@@ -73,17 +73,20 @@ export default function AdminCursosPage() {
       </div>
 
       {courses.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+        <div className="rounded-xl border border-slate-200 bg-white p-12 text-center">
           <p className="text-slate-500">No hay cursos registrados.</p>
-          <Link href="/admin/cursos/nuevo" className="text-brand-navy font-medium text-sm mt-2 inline-block hover:underline">
+          <Link
+            href="/admin/cursos/nuevo"
+            className="text-brand-navy mt-2 inline-block text-sm font-medium hover:underline"
+          >
             Crear el primer curso
           </Link>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
           <table className="w-full">
             <thead>
-              <tr className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider border-b border-slate-200">
+              <tr className="border-b border-slate-200 text-left text-xs font-medium tracking-wider text-slate-500 uppercase">
                 <th className="px-6 py-3">Título</th>
                 <th className="px-6 py-3">Categoría</th>
                 <th className="px-6 py-3">Horas</th>
@@ -98,18 +101,22 @@ export default function AdminCursosPage() {
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-slate-900">{course.title}</span>
                       {course.featured && (
-                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
+                        <span className="inline-flex items-center rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-700">
                           Destacado
                         </span>
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-600">{course.category_slug || '—'}</td>
-                  <td className="px-6 py-4 text-sm text-slate-600">{course.hours ? `${course.hours}h` : '—'}</td>
+                  <td className="px-6 py-4 text-sm text-slate-600">
+                    {course.category_slug || '—'}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-slate-600">
+                    {course.hours ? `${course.hours}h` : '—'}
+                  </td>
                   <td className="px-6 py-4">
                     <button
                       onClick={() => toggleActive(course.id, course.active)}
-                      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+                      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
                         course.active
                           ? 'bg-green-100 text-green-700'
                           : 'bg-slate-100 text-slate-500'
@@ -122,7 +129,7 @@ export default function AdminCursosPage() {
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/admin/cursos/${course.id}/editar`}
-                        className="text-sm text-brand-navy hover:underline"
+                        className="text-brand-navy text-sm hover:underline"
                       >
                         Editar
                       </Link>

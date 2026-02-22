@@ -18,11 +18,7 @@ type CourseData = {
   featured: boolean;
 };
 
-export default function EditarCursoPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default function EditarCursoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [course, setCourse] = useState<CourseData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,22 +33,20 @@ export default function EditarCursoPage({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-2 border-brand-navy border-t-transparent" />
+      <div className="flex h-64 items-center justify-center">
+        <div className="border-brand-navy h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
       </div>
     );
   }
 
   if (!course) {
-    return (
-      <div className="text-center py-12 text-slate-500">Curso no encontrado.</div>
-    );
+    return <div className="py-12 text-center text-slate-500">Curso no encontrado.</div>;
   }
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-slate-900 mb-6">Editar Curso</h1>
-      <div className="bg-white rounded-xl border border-slate-200 p-6">
+      <h1 className="mb-6 text-2xl font-bold text-slate-900">Editar Curso</h1>
+      <div className="rounded-xl border border-slate-200 bg-white p-6">
         <CourseForm course={course} />
       </div>
     </div>

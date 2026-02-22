@@ -25,10 +25,10 @@ export function CourseCard({ course }: Props) {
   return (
     <Link
       href={`/cursos/${course.slug}`}
-      className="group bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:border-slate-300 hover:shadow-xl"
     >
       {/* Image */}
-      <div className="relative aspect-[16/10] image-zoom-hover">
+      <div className="image-zoom-hover relative aspect-[16/10]">
         <Image
           src={imageUrl}
           alt={course.title}
@@ -36,17 +36,17 @@ export function CourseCard({ course }: Props) {
           className="object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-[1]" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
         {/* Badges on image */}
         <div className="absolute top-3 left-3 z-[2] flex items-center gap-2">
           {course.category_name && (
-            <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/90 text-brand-navy backdrop-blur-sm">
+            <span className="text-brand-navy rounded-lg bg-white/90 px-2.5 py-1 text-[11px] font-semibold backdrop-blur-sm">
               {course.category_name}
             </span>
           )}
           {course.hours && (
-            <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-brand-orange/90 text-white backdrop-blur-sm">
+            <span className="bg-brand-orange/90 rounded-lg px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
               {course.hours}h
             </span>
           )}
@@ -54,13 +54,13 @@ export function CourseCard({ course }: Props) {
       </div>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-1">
-        <h3 className="text-base font-bold text-slate-900 line-clamp-2 group-hover:text-brand-navy transition-colors">
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="group-hover:text-brand-navy line-clamp-2 text-base font-bold text-slate-900 transition-colors">
           {course.title}
         </h3>
 
         {course.excerpt && (
-          <p className="mt-2 text-sm text-slate-500 line-clamp-2 leading-relaxed">
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-500">
             {course.excerpt}
           </p>
         )}
@@ -68,11 +68,11 @@ export function CourseCard({ course }: Props) {
         <div className="mt-auto pt-4">
           {/* Modality badges */}
           {modalities.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-3">
+            <div className="mb-3 flex flex-wrap gap-1.5">
               {modalities.map((m) => (
                 <span
                   key={m}
-                  className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-100 text-slate-600"
+                  className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600"
                 >
                   {m}
                 </span>
@@ -81,10 +81,15 @@ export function CourseCard({ course }: Props) {
           )}
 
           {/* CTA */}
-          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange group-hover:gap-2.5 transition-all">
+          <span className="text-brand-orange inline-flex items-center gap-1.5 text-sm font-semibold transition-all group-hover:gap-2.5">
             Ver curso
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
             </svg>
           </span>
         </div>

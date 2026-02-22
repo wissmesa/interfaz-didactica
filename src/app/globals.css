@@ -1,9 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --brand-orange: #F28500;
+  --brand-orange: #f28500;
   --brand-orange-hover: #d97600;
   --brand-navy: #002366;
   --brand-navy-light: #003399;
@@ -12,7 +12,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand-orange: #F28500;
+  --color-brand-orange: #f28500;
   --color-brand-orange-hover: #d97600;
   --color-brand-navy: #002366;
   --color-brand-navy-light: #003399;
@@ -26,7 +26,12 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    var(--font-inter),
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 /* Scroll offset for sticky header */

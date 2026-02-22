@@ -10,10 +10,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow login page and auth API routes
-  if (
-    pathname === '/admin/login' ||
-    pathname.startsWith('/api/auth/')
-  ) {
+  if (pathname === '/admin/login' || pathname.startsWith('/api/auth/')) {
     return NextResponse.next();
   }
 

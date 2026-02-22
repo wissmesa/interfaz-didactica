@@ -56,8 +56,7 @@ export const courses: Course[] = [
   {
     slug: 'excel-intermedio-8h',
     title: 'Excel Intermedio (8 horas)',
-    excerpt:
-      'Funciones de cálculo, formato condicional y listas para análisis de datos.',
+    excerpt: 'Funciones de cálculo, formato condicional y listas para análisis de datos.',
     description:
       'Profundiza en funciones, validación de datos, formato condicional, tablas y gráficos para análisis efectivo.',
     hours: 8,
@@ -153,13 +152,7 @@ export const companyInfo = {
     'Ayudar a los individuos de organizaciones privadas o públicas a desarrollar sus competencias, habilidades y conocimientos en las áreas de informática, competencias gerenciales, atención al cliente, desarrollo profesional y personal, siempre comprometidos en prestar un servicio excelente al cliente.',
   vision:
     'Ser la empresa de primera opción en el proceso de capacitación, formación y consultoría del talento humano en las empresas y organizaciones privadas y públicas.',
-  values: [
-    'Excelencia',
-    'Calidad',
-    'Responsabilidad',
-    'Compromiso',
-    'Innovación',
-  ],
+  values: ['Excelencia', 'Calidad', 'Responsabilidad', 'Compromiso', 'Innovación'],
 };
 
 export const services: Service[] = [
@@ -183,8 +176,7 @@ export const services: Service[] = [
   },
   {
     title: 'Evaluación de Competencias',
-    description:
-      'Herramientas avanzadas para medir y desarrollar las habilidades de tu equipo.',
+    description: 'Herramientas avanzadas para medir y desarrollar las habilidades de tu equipo.',
     icon: '📈',
   },
 ];
@@ -260,8 +252,7 @@ export const areasFormacion: AreaFormacion[] = [
     title: 'Ofimática Profesional',
     copy: 'Domina el paquete Office (Excel de Básico a Avanzado, Word y PowerPoint) para optimizar la productividad operativa de tu empresa.',
     icon: 'ofimatica',
-    image:
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&fit=crop',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&fit=crop',
     bullets: [
       'Excel Básico, Intermedio y Avanzado',
       'Word corporativo y plantillas profesionales',
@@ -329,8 +320,7 @@ export const modalidadesEstudio: ModalidadEstudio[] = [
 ];
 
 export const porQueElegirnos = {
-  image:
-    'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80&fit=crop',
+  image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80&fit=crop',
   headline: 'Desde 2007 formando el talento que mueve a Venezuela',
   description:
     'Somos una organización orientada a ofrecer a corporaciones, empresas e instituciones apoyo en la formación, capacitación y asesoría de su personal. Presentamos propuestas personalizadas que contemplan los requerimientos de cada organización, de manera que cada participante obtenga el mayor retorno en la capacitación emprendida.',

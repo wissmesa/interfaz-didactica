@@ -33,9 +33,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -98,15 +96,23 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
-        <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        <div className="relative w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <svg
+              className="h-8 w-8 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold mb-2 text-slate-900">
-            ¡Gracias por contactarnos!
-          </h2>
+          <h2 className="mb-2 text-2xl font-bold text-slate-900">¡Gracias por contactarnos!</h2>
           <p className="text-slate-600">
             Uno de nuestros especialistas se pondrá en contacto contigo en las próximas 24 horas.
           </p>
@@ -119,32 +125,38 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-100">
-          <h2 className="text-xl font-bold text-brand-navy">
-            Cotizar ahora
-          </h2>
+        <div className="flex items-center justify-between border-b border-slate-100 p-6">
+          <h2 className="text-brand-navy text-xl font-bold">Cotizar ahora</h2>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-slate-50"
+            className="rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-50 hover:text-slate-600"
             aria-label="Cerrar modal"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
 
         {/* Form */}
         <div className="p-6">
-          <p className="text-slate-500 text-sm mb-6">
+          <p className="mb-6 text-sm text-slate-500">
             Completa el formulario y te enviaremos una propuesta personalizada.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="modal-fullName" className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label
+                htmlFor="modal-fullName"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 Nombre y Apellido *
               </label>
               <input
@@ -155,12 +167,15 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 value={formData.fullName}
                 onChange={handleChange}
                 placeholder="Ej: María García"
-                className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all duration-200"
+                className="focus:ring-brand-orange/50 focus:border-brand-orange w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:outline-none"
               />
             </div>
 
             <div>
-              <label htmlFor="modal-email" className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label
+                htmlFor="modal-email"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 Correo Corporativo *
               </label>
               <input
@@ -171,13 +186,16 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="nombre@empresa.com"
-                className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all duration-200"
+                className="focus:ring-brand-orange/50 focus:border-brand-orange w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:outline-none"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="modal-company" className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label
+                  htmlFor="modal-company"
+                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                >
                   Empresa *
                 </label>
                 <input
@@ -188,12 +206,15 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   value={formData.company}
                   onChange={handleChange}
                   placeholder="Tu empresa"
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all duration-200"
+                  className="focus:ring-brand-orange/50 focus:border-brand-orange w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label htmlFor="modal-teamSize" className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label
+                  htmlFor="modal-teamSize"
+                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                >
                   Nro. personas
                 </label>
                 <input
@@ -203,25 +224,23 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   value={formData.teamSize}
                   onChange={handleChange}
                   placeholder="Ej: 15"
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all duration-200"
+                  className="focus:ring-brand-orange/50 focus:border-brand-orange w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <p className="block text-sm font-medium text-slate-700 mb-2">
-                Áreas de Interés *
-              </p>
+              <p className="mb-2 block text-sm font-medium text-slate-700">Áreas de Interés *</p>
               <div className="flex flex-wrap gap-2">
                 {AREA_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
                     type="button"
                     onClick={() => toggleArea(opt.value)}
-                    className={`px-4 py-2.5 rounded-lg text-sm font-medium border transition-all duration-200 ${
+                    className={`rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
                       formData.areas.includes(opt.value)
-                        ? 'bg-brand-orange text-white border-brand-orange shadow-sm'
-                        : 'bg-white text-slate-700 border-slate-300 hover:border-brand-orange/50'
+                        ? 'bg-brand-orange border-brand-orange text-white shadow-sm'
+                        : 'hover:border-brand-orange/50 border-slate-300 bg-white text-slate-700'
                     }`}
                   >
                     {opt.label}
@@ -229,12 +248,12 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 ))}
               </div>
               {formData.areas.length === 0 && (
-                <p className="text-xs text-slate-400 mt-1.5">Selecciona al menos un área</p>
+                <p className="mt-1.5 text-xs text-slate-400">Selecciona al menos un área</p>
               )}
             </div>
 
             {submitStatus === 'error' && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
+              <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                 Hubo un error al enviar. Por favor, intenta nuevamente.
               </div>
             )}
@@ -242,11 +261,11 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-brand-orange text-white py-3.5 rounded-lg text-base font-semibold hover:bg-brand-orange-hover transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="bg-brand-orange hover:bg-brand-orange-hover flex w-full items-center justify-center gap-2 rounded-lg py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   Enviando...
                 </>
               ) : (
@@ -255,7 +274,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </button>
           </form>
 
-          <p className="mt-4 text-xs text-slate-400 text-center">
+          <p className="mt-4 text-center text-xs text-slate-400">
             Al enviar este formulario, aceptas recibir comunicaciones de Interfaz Didáctica.
           </p>
         </div>

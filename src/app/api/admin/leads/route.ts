@@ -29,8 +29,7 @@ export async function GET(request: NextRequest) {
       params.push(`%${search}%`);
     }
 
-    const whereClause =
-      conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
     const leads = await sql.query(
       `SELECT * FROM leads ${whereClause} ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`,
@@ -59,9 +58,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching leads:', error);
-    return NextResponse.json(
-      { error: 'Error al obtener leads' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Error al obtener leads' }, { status: 500 });
   }
 }
