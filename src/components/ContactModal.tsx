@@ -7,8 +7,14 @@ type FormData = {
   email: string;
   company: string;
   teamSize: string;
-  area: string;
+  areas: string[];
 };
+
+const AREA_OPTIONS = [
+  { value: 'ofimatica', label: 'Ofimática' },
+  { value: 'atencion-cliente', label: 'Atención al Cliente' },
+  { value: 'gerencia', label: 'Gerencia' },
+];
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -21,7 +27,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     email: '',
     company: '',
     teamSize: '',
-    area: '',
+    areas: [],
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,10 +40,24 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const toggleArea = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      areas: prev.areas.includes(value)
+        ? prev.areas.filter((a) => a !== value)
+        : [...prev.areas, value],
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.areas.length === 0) return;
     setIsSubmitting(true);
     setSubmitStatus('idle');
+
+    const areasLabel = formData.areas
+      .map((v) => AREA_OPTIONS.find((o) => o.value === v)?.label || v)
+      .join(', ');
 
     try {
       const response = await fetch('/api/leads', {
@@ -48,7 +68,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
           lastname: formData.fullName.split(' ').slice(1).join(' ') || '',
           email: formData.email,
           phone: '',
-          message: `Empresa: ${formData.company} | Personas: ${formData.teamSize} | Área: ${formData.area}`,
+          interest: formData.areas.join(','),
+          message: `Empresa: ${formData.company} | Personas: ${formData.teamSize} | Áreas: ${areasLabel}`,
           source: 'contact-modal',
         }),
       });
@@ -59,7 +80,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       setSubmitStatus('success');
 
       setTimeout(() => {
-        setFormData({ fullName: '', email: '', company: '', teamSize: '', area: '' });
+        setFormData({ fullName: '', email: '', company: '', teamSize: '', areas: [] });
         setSubmitStatus('idle');
         onClose();
       }, 3000);
@@ -188,27 +209,28 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </div>
 
             <div>
-              <label htmlFor="modal-area" className="block text-sm font-medium text-slate-700 mb-1.5">
-                Área de Interés *
-              </label>
-              <select
-                id="modal-area"
-                name="area"
-                required
-                value={formData.area}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all duration-200 appearance-none"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'right 12px center',
-                }}
-              >
-                <option value="">Selecciona un área</option>
-                <option value="ofimatica">Ofimática</option>
-                <option value="atencion-cliente">Atención al Cliente</option>
-                <option value="gerencia">Gerencia</option>
-              </select>
+              <p className="block text-sm font-medium text-slate-700 mb-2">
+                Áreas de Interés *
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {AREA_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => toggleArea(opt.value)}
+                    className={`px-4 py-2.5 rounded-lg text-sm font-medium border transition-all duration-200 ${
+                      formData.areas.includes(opt.value)
+                        ? 'bg-brand-orange text-white border-brand-orange shadow-sm'
+                        : 'bg-white text-slate-700 border-slate-300 hover:border-brand-orange/50'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              {formData.areas.length === 0 && (
+                <p className="text-xs text-slate-400 mt-1.5">Selecciona al menos un área</p>
+              )}
             </div>
 
             {submitStatus === 'error' && (
