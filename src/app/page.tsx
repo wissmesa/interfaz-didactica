@@ -653,10 +653,10 @@ export default function Home() {
                   <div>
                     <p className="font-medium text-white">WhatsApp</p>
                     <a
-                      href="https://wa.me/584125957732"
+                      href="https://wa.me/584125955732"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-sm text-slate-400 hover:text-brand-orange transition-colors underline decoration-slate-600 underline-offset-2"
+                      className="hover:text-brand-orange block text-sm text-slate-400 underline decoration-slate-600 underline-offset-2 transition-colors"
                     >
                       +58 412-595-7732 &middot; Escríbenos &rarr;
                     </a>
