@@ -652,7 +652,14 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-medium text-white">WhatsApp</p>
-                    <p className="text-sm text-slate-400">+58 412-595-7732</p>
+                    <a
+                      href="https://wa.me/584125957732"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm text-slate-400 hover:text-brand-orange transition-colors underline decoration-slate-600 underline-offset-2"
+                    >
+                      +58 412-595-7732 &middot; Escríbenos &rarr;
+                    </a>
                   </div>
                 </div>
 
