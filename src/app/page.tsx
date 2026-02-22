@@ -9,23 +9,24 @@ modalidadesEstudio,
 heroImage,
 landingStats,
 porQueElegirnos,
+companyInfo
 } from '@/data/site';
 import { useContact } from '@/components/ClientLayout';
 
 type DbTestimonial = {
-  id: number;
-  name: string;
-  position: string | null;
-  company: string | null;
-  content: string;
-  rating: number;
-  initials: string | null;
+id: number;
+name: string;
+position: string | null;
+company: string | null;
+content: string;
+rating: number;
+initials: string | null;
 };
 
 type DbCompany = {
-  id: number;
-  name: string;
-  logo_url: string | null;
+id: number;
+name: string;
+logo_url: string | null;
 };
 
 /* ── SVG Icon Components ── */
@@ -284,7 +285,7 @@ const [companies, setCompanies] = useState<DbCompany[]>([]);
 const AREA_OPTIONS = [
 { value: 'ofimatica', label: 'Ofimática' },
 { value: 'atencion-cliente', label: 'Atención al Cliente' },
-{ value: 'gerencia', label: 'Gerencia' },
+{ value: 'gerencia', label: 'Gerencia' }
 ];
 const [formData, setFormData] = useState({
 fullName: '',
@@ -299,14 +300,14 @@ const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>(
 );
 
 useEffect(() => {
-  fetch('/api/testimonials')
-    .then((res) => res.json())
-    .then((data) => setTestimonials(data.testimonials || []))
-    .catch(() => {});
-  fetch('/api/companies')
-    .then((res) => res.json())
-    .then((data) => setCompanies(data.companies || []))
-    .catch(() => {});
+fetch('/api/testimonials')
+.then((res) => res.json())
+.then((data) => setTestimonials(data.testimonials || []))
+.catch(() => {});
+fetch('/api/companies')
+.then((res) => res.json())
+.then((data) => setCompanies(data.companies || []))
+.catch(() => {});
 }, []);
 
 const handleChange = (
@@ -321,7 +322,7 @@ setFormData((prev) => ({
 ...prev,
 areas: prev.areas.includes(value)
 ? prev.areas.filter((a) => a !== value)
-: [...prev.areas, value],
+: [...prev.areas, value]
 }));
 };
 
@@ -377,7 +378,7 @@ return (
 <div className="animate-fade-in-up">
 <div className="inline-flex items-center gap-2 bg-brand-orange/10 text-brand-orange px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
 <span className="w-2 h-2 rounded-full bg-brand-orange" />
-17+ años formando talento en Venezuela
+18+ años formando talento en Venezuela
 </div>
 
 <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.5rem] font-bold tracking-tight text-brand-navy leading-[1.1]">
@@ -386,7 +387,7 @@ Potencia el talento de tu equipo con formación integral.
 
 <p className="mt-6 text-lg text-slate-600 leading-relaxed max-w-xl">
 Especialistas en Ofimática, Atención al Cliente y Desarrollo Gerencial.
-Soluciones a medida para empresas con más de 17 años de trayectoria en Caracas.
+Soluciones a medida para empresas con más de 18 años de trayectoria en Caracas.
 </p>
 
 <div className="mt-8 flex flex-col sm:flex-row gap-4">
@@ -523,10 +524,11 @@ sizes="(max-width: 768px) 100vw, 33vw"
 </div>
 </section>
 
-{/* ═══════════════════ POR QUÉ ELEGIRNOS ═══════════════════ */}
+{/* ═══════════════════ QUIÉNES SOMOS ═══════════════════ */}
 <section className="py-24 md:py-32 bg-white">
 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+{/* Top: Image + Company description */}
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
 {/* Left: Image */}
 <div className="relative">
 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
@@ -538,23 +540,25 @@ className="object-cover"
 sizes="(max-width: 1024px) 100vw, 50vw"
 />
 </div>
-{/* Accent elements */}
 <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-brand-orange/10 rounded-2xl -z-10" />
 </div>
 
 {/* Right: Copy */}
 <div>
 <p className="text-sm font-semibold tracking-widest text-brand-orange uppercase mb-3">
-Nuestra diferencia
+Quiénes Somos
 </p>
 <h2 className="text-3xl sm:text-4xl font-bold text-brand-navy tracking-tight leading-tight mb-6">
 {porQueElegirnos.headline}
 </h2>
-<p className="text-slate-600 text-lg leading-relaxed mb-8">
-{porQueElegirnos.description}
+<p className="text-slate-600 text-lg leading-relaxed mb-4">
+{companyInfo.description}
+</p>
+<p className="text-slate-500 leading-relaxed mb-8">
+{companyInfo.descriptionExtended}
 </p>
 
-<div className="space-y-4">
+<div className="space-y-3">
 {porQueElegirnos.differentiators.map((item) => (
 <div key={item} className="flex items-start gap-3">
 <div className="w-6 h-6 flex items-center justify-center rounded-full bg-brand-orange text-white shrink-0 mt-0.5">
@@ -702,15 +706,27 @@ viewBox="0 0 20 20"
 {companies.length > 0 ? (
 <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
 {companies.map((c) =>
-  c.logo_url ? (
-    <div key={c.id} className="w-28 h-10 relative grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-      <Image src={c.logo_url} alt={c.name} fill className="object-contain" sizes="112px" />
-    </div>
-  ) : (
-    <div key={c.id} className="px-4 py-2 text-sm font-medium text-slate-400 border border-slate-200 rounded-lg">
-      {c.name}
-    </div>
-  )
+c.logo_url ? (
+<div
+key={c.id}
+className="w-28 h-10 relative grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+>
+<Image
+src={c.logo_url}
+alt={c.name}
+fill
+className="object-contain"
+sizes="112px"
+/>
+</div>
+) : (
+<div
+key={c.id}
+className="px-4 py-2 text-sm font-medium text-slate-400 border border-slate-200 rounded-lg"
+>
+{c.name}
+</div>
+)
 )}
 </div>
 ) : (
@@ -780,7 +796,26 @@ Torre La Primera, Piso 15, Campo Alegre, Caracas.
 </div>
 <div>
 <p className="text-white font-medium">WhatsApp</p>
-<p className="text-slate-400 text-sm">+58 412-000-0000</p>
+<p className="text-slate-400 text-sm">+58 412-595-7732</p>
+</div>
+</div>
+
+{/* Teléfonos fijos */}
+<div className="flex items-start gap-4">
+<div className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/10 text-brand-orange shrink-0">
+<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path
+strokeLinecap="round"
+strokeLinejoin="round"
+strokeWidth={2}
+d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+/>
+</svg>
+</div>
+<div>
+<p className="text-white font-medium">Teléfonos</p>
+<p className="text-slate-400 text-sm">+58 212-266-9908</p>
+<p className="text-slate-400 text-sm">+58 212-312-6389</p>
 </div>
 </div>
 </div>

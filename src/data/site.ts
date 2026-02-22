@@ -145,18 +145,20 @@ export const companyInfo = {
   name: 'Interfaz Didáctica',
   tagline: 'Especialistas en la Gestión y Capacitación del Talento Humano',
   description:
-    'Somos una empresa líder en capacitación y desarrollo organizacional, comprometida con el crecimiento profesional y la excelencia empresarial.',
-  founded: '2010',
+    'Interfaz Didáctica, C.A. es una organización fundada en el año 2007, orientada a ofrecer a corporaciones, empresas e instituciones apoyo en la formación, capacitación y asesoría de su personal en el área de tecnología informática, gerencia, atención al cliente, desarrollo profesional y personal, contando para ello con un grupo de profesionales de primera línea con experiencia en esta actividad.',
+  descriptionExtended:
+    'Estamos constantemente en la búsqueda de las soluciones de capacitación que mejor se adapten a los objetivos de negocios de cada cliente y presentar propuestas personalizadas que contemplen los requerimientos y exigencias de cada organización, de manera que cada participante obtenga el mayor retorno en la capacitación emprendida.',
+  founded: '2007',
   mission:
-    'Transformar organizaciones a través del desarrollo del talento humano, proporcionando soluciones de capacitación innovadoras y efectivas.',
+    'Ayudar a los individuos de organizaciones privadas o públicas a desarrollar sus competencias, habilidades y conocimientos en las áreas de informática, competencias gerenciales, atención al cliente, desarrollo profesional y personal, siempre comprometidos en prestar un servicio excelente al cliente.',
   vision:
-    'Ser reconocidos como el socio estratégico preferido para el desarrollo del capital humano en Latinoamérica.',
+    'Ser la empresa de primera opción en el proceso de capacitación, formación y consultoría del talento humano en las empresas y organizaciones privadas y públicas.',
   values: [
-    'Excelencia en el servicio',
-    'Innovación continua',
-    'Compromiso con el cliente',
-    'Integridad y transparencia',
-    'Desarrollo sostenible',
+    'Excelencia',
+    'Calidad',
+    'Responsabilidad',
+    'Compromiso',
+    'Innovación',
   ],
 };
 
@@ -329,19 +331,19 @@ export const modalidadesEstudio: ModalidadEstudio[] = [
 export const porQueElegirnos = {
   image:
     'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80&fit=crop',
-  headline: 'Más de 17 años formando el talento que mueve a Venezuela',
+  headline: 'Desde 2007 formando el talento que mueve a Venezuela',
   description:
-    'Desde 2007 hemos acompañado a empresas de todos los sectores en el desarrollo de su capital humano. Nuestro enfoque combina contenido actualizado, instructores con experiencia corporativa real y una metodología práctica que garantiza resultados medibles desde la primera sesión.',
+    'Somos una organización orientada a ofrecer a corporaciones, empresas e instituciones apoyo en la formación, capacitación y asesoría de su personal. Presentamos propuestas personalizadas que contemplan los requerimientos de cada organización, de manera que cada participante obtenga el mayor retorno en la capacitación emprendida.',
   differentiators: [
-    'Programas 100% personalizados a la realidad de tu empresa',
-    'Instructores con +15 años de experiencia corporativa',
+    'Propuestas 100% personalizadas a los objetivos de tu empresa',
+    'Profesionales de primera línea con experiencia corporativa real',
     'Seguimiento y soporte post-formación incluido',
     'Certificados de participación avalados',
   ],
 };
 
 export const landingStats = [
-  { number: '17+', label: 'Años de experiencia' },
+  { number: '18+', label: 'Años de experiencia' },
   { number: '150+', label: 'Empresas atendidas' },
   { number: '3,000+', label: 'Profesionales formados' },
   { number: '50+', label: 'Programas disponibles' },
