@@ -37,3 +37,45 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 admin
 HTGmenTE3gRlOrEe
+
+
+
+Fundacion Empresas Polar
+Alimentos Mary
+Banco Microfinanciero R4
+Laboratorios Farma
+Banesco y Banesco seguros
+Todoticket
+Fundacion Badan
+Club bahia de los piratas
+Alfonzo Rivas
+Corporacion Digitel
+Ponzi & Benzo
+Citybank
+Cencozotti
+Hotel Tamanaco
+Hotel Marriot
+Grupo Cordialito
+indecem
+Kimberly Clark
+Laboratorio kleenox
+Makro comercializadora
+Mercantil Seguros
+Ovejita
+Muebles Bima
+Pollo Arturos
+Pernot Richard
+robert bosh
+Seguros Caracas
+Seguros nuevo mundo
+Venemergencia
+Zuritch seguros
+Farmatodo
+Supermercados Plazas
+Excelsior Gama
+Bonsai Sushi
+Rolda
+Perfumes Factory
+Duncan
+Laboratorios Vargas
+Ferretotal

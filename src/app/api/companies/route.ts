@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const companies = await sql`
       SELECT * FROM partner_companies
-      WHERE active = true
+      WHERE active = true AND logo_url IS NOT NULL
       ORDER BY sort_order ASC, created_at DESC
     `;
     return NextResponse.json({ companies });

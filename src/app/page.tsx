@@ -519,8 +519,52 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Company logos */}
+          {companies.length > 0 ? (
+            <div className="mb-16 flex flex-wrap items-center justify-center gap-10 md:gap-14">
+              {companies.map((c) =>
+                c.logo_url ? (
+                  <div
+                    key={c.id}
+                    className="relative h-14 w-36 opacity-40 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                  >
+                    {c.logo_url.endsWith('.svg') ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={c.logo_url}
+                        alt={c.name}
+                        className="h-full w-full object-contain"
+                      />
+                    ) : (
+                      <Image
+                        src={c.logo_url}
+                        alt={c.name}
+                        fill
+                        className="object-contain"
+                        sizes="144px"
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    key={c.id}
+                    className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-400"
+                  >
+                    {c.name}
+                  </div>
+                )
+              )}
+            </div>
+          ) : (
+            <div className="mb-16 flex flex-wrap items-center justify-center gap-8 opacity-30 md:gap-12">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-10 w-28 rounded-md bg-slate-300" aria-hidden="true" />
+              ))}
+            </div>
+          )}
+
           {/* Testimonials */}
-          <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {testimonials.map((t) => (
               <div
                 key={t.name}
@@ -560,41 +604,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-
-          {/* Company logos */}
-          {companies.length > 0 ? (
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-              {companies.map((c) =>
-                c.logo_url ? (
-                  <div
-                    key={c.id}
-                    className="relative h-10 w-28 opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
-                  >
-                    <Image
-                      src={c.logo_url}
-                      alt={c.name}
-                      fill
-                      className="object-contain"
-                      sizes="112px"
-                    />
-                  </div>
-                ) : (
-                  <div
-                    key={c.id}
-                    className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-400"
-                  >
-                    {c.name}
-                  </div>
-                )
-              )}
-            </div>
-          ) : (
-            <div className="flex flex-wrap items-center justify-center gap-8 opacity-30 md:gap-12">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-10 w-28 rounded-md bg-slate-300" aria-hidden="true" />
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
