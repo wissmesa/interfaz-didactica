@@ -9,16 +9,21 @@ type ContentModule = {
 };
 
 export function ContentModulesAccordion({ modules }: { modules: ContentModule[] }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndexes, setOpenIndexes] = useState<Set<number>>(new Set());
 
   const toggle = (i: number) => {
-    setOpenIndex(openIndex === i ? null : i);
+    setOpenIndexes((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
   };
 
   return (
     <div className="space-y-3">
       {modules.map((mod, i) => {
-        const isOpen = openIndex === i;
+        const isOpen = openIndexes.has(i);
         return (
           <div
             key={i}
