@@ -16,6 +16,11 @@ type CourseData = {
   category_slug: string;
   modality_slugs: string[] | null;
   featured: boolean;
+  general_objective: string;
+  specific_objectives: string[];
+  methodology: string;
+  benefits: string[];
+  content_modules: { title: string; topics: string[]; dynamic: string }[];
 };
 
 export default function EditarCursoPage({ params }: { params: Promise<{ id: string }> }) {

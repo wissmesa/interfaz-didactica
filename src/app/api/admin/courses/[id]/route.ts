@@ -42,6 +42,11 @@ export async function PUT(request: NextRequest, context: RouteContext) {
       modalitySlugs,
       featured,
       active,
+      generalObjective,
+      specificObjectives,
+      methodology,
+      benefits,
+      contentModules,
     } = body;
 
     const rows = await sql`
@@ -57,6 +62,11 @@ export async function PUT(request: NextRequest, context: RouteContext) {
         category_slug = ${categorySlug ?? null},
         featured = COALESCE(${featured}, featured),
         active = COALESCE(${active}, active),
+        general_objective = ${generalObjective ?? null},
+        specific_objectives = ${JSON.stringify(specificObjectives ?? [])},
+        methodology = ${methodology ?? null},
+        benefits = ${JSON.stringify(benefits ?? [])},
+        content_modules = ${JSON.stringify(contentModules ?? [])},
         updated_at = now()
       WHERE id = ${parseInt(id)}
       RETURNING *

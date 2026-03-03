@@ -5,6 +5,13 @@ import { notFound } from 'next/navigation';
 import { getCourseImage } from '@/lib/course-images';
 import { CourseCard, CourseCardData } from '@/components/CourseCard';
 import { CourseCtaButton } from '@/components/CourseCtaButton';
+import { ContentModulesAccordion } from '@/components/ContentModulesAccordion';
+
+type ContentModule = {
+  title: string;
+  topics: string[];
+  dynamic?: string;
+};
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -26,6 +33,19 @@ export default async function Page({ params }: Props) {
   const course = rows[0];
   const modalities = (course.modality_names as string[] | null) || [];
   const imageUrl = getCourseImage(course.image as string | null);
+
+  const specificObjectives: string[] =
+    typeof course.specific_objectives === 'string'
+      ? JSON.parse(course.specific_objectives)
+      : (course.specific_objectives as string[]) || [];
+  const courseBenefits: string[] =
+    typeof course.benefits === 'string'
+      ? JSON.parse(course.benefits)
+      : (course.benefits as string[]) || [];
+  const contentModules: ContentModule[] =
+    typeof course.content_modules === 'string'
+      ? JSON.parse(course.content_modules)
+      : (course.content_modules as ContentModule[]) || [];
 
   // Related courses (same category, excluding current)
   const relatedRaw = await sql`
@@ -174,72 +194,128 @@ export default async function Page({ params }: Props) {
           <div className="space-y-8 lg:col-span-2">
             {/* Description */}
             {course.description && (
-              <div>
-                <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
-                  <span className="bg-brand-orange h-6 w-1 rounded-full" />
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
                   Descripción del Curso
                 </h2>
-                <div className="prose prose-slate max-w-none">
-                  <p className="leading-relaxed whitespace-pre-line text-slate-600">
-                    {course.description as string}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Requirements */}
-            {course.requirements && (
-              <div className="rounded-2xl border border-slate-200/80 bg-white p-6">
-                <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-slate-900">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
-                    <svg
-                      className="h-4.5 w-4.5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </span>
-                  Requisitos
-                </h2>
                 <p className="leading-relaxed whitespace-pre-line text-slate-600">
-                  {course.requirements as string}
+                  {course.description as string}
                 </p>
-              </div>
+              </section>
             )}
 
             {/* Audience */}
             {course.audience && (
-              <div className="rounded-2xl border border-slate-200/80 bg-white p-6">
-                <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-slate-900">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
-                    <svg
-                      className="h-4.5 w-4.5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                  </span>
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
                   Dirigido a
                 </h2>
                 <p className="leading-relaxed whitespace-pre-line text-slate-600">
                   {course.audience as string}
                 </p>
-              </div>
+              </section>
             )}
+
+            {/* General Objective */}
+            {course.general_objective && (
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
+                  Objetivo General
+                </h2>
+                <p className="leading-relaxed whitespace-pre-line text-slate-600">
+                  {course.general_objective as string}
+                </p>
+              </section>
+            )}
+
+            {/* Specific Objectives */}
+            {specificObjectives.length > 0 && (
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
+                  Objetivos Específicos
+                </h2>
+                <ul className="space-y-3 border-l-2 border-slate-200 pl-5">
+                  {specificObjectives.map((obj, i) => (
+                    <li key={i} className="relative leading-relaxed text-slate-600">
+                      <span className="bg-brand-navy absolute -left-[25px] top-[9px] h-2 w-2 rounded-full" />
+                      {obj}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Methodology */}
+            {course.methodology && (
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
+                  Metodología de Aprendizaje
+                </h2>
+                <p className="leading-relaxed whitespace-pre-line text-slate-600">
+                  {course.methodology as string}
+                </p>
+              </section>
+            )}
+
+            {/* Benefits */}
+            {courseBenefits.length > 0 && (
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
+                  Beneficios para los Participantes
+                </h2>
+                <ul className="space-y-2.5 pl-1">
+                  {courseBenefits.map((b, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <svg
+                        className="text-brand-orange mt-1 h-4 w-4 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      <span className="leading-relaxed text-slate-600">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Content Modules */}
+            {contentModules.length > 0 && (
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
+                  Contenido Programático
+                </h2>
+                <ContentModulesAccordion modules={contentModules} />
+              </section>
+            )}
+
+            {/* Requirements */}
+            {course.requirements && (
+              <section>
+                <h2 className="mb-4 flex items-center gap-2.5 text-lg font-bold text-slate-900">
+                  <span className="bg-brand-navy h-5 w-1 rounded-full" />
+                  Requisitos
+                </h2>
+                <p className="leading-relaxed whitespace-pre-line text-slate-600">
+                  {course.requirements as string}
+                </p>
+              </section>
+            )}
+
           </div>
 
           {/* Sidebar */}

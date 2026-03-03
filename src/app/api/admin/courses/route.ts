@@ -41,6 +41,11 @@ export async function POST(request: NextRequest) {
       categorySlug,
       modalitySlugs,
       featured,
+      generalObjective,
+      specificObjectives,
+      methodology,
+      benefits,
+      contentModules,
     } = body;
 
     if (!slug || !title) {
@@ -48,8 +53,8 @@ export async function POST(request: NextRequest) {
     }
 
     const rows = await sql`
-      INSERT INTO courses (slug, title, excerpt, description, hours, requirements, audience, image, category_slug, featured)
-      VALUES (${slug}, ${title}, ${excerpt || null}, ${description || null}, ${hours || null}, ${requirements || null}, ${audience || null}, ${image || null}, ${categorySlug || null}, ${featured || false})
+      INSERT INTO courses (slug, title, excerpt, description, hours, requirements, audience, image, category_slug, featured, general_objective, specific_objectives, methodology, benefits, content_modules)
+      VALUES (${slug}, ${title}, ${excerpt || null}, ${description || null}, ${hours || null}, ${requirements || null}, ${audience || null}, ${image || null}, ${categorySlug || null}, ${featured || false}, ${generalObjective || null}, ${JSON.stringify(specificObjectives || [])}, ${methodology || null}, ${JSON.stringify(benefits || [])}, ${JSON.stringify(contentModules || [])})
       RETURNING *
     `;
 
