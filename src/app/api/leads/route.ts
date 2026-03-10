@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/db';
+import { sendLeadNotification } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,7 +13,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(body.email)) {
       return NextResponse.json(
         { success: false, error: 'Por favor ingresa un email válido' },
@@ -37,12 +38,7 @@ export async function POST(request: NextRequest) {
 
     const savedLead = rows[0];
 
-    console.log('Nuevo lead creado:', {
-      id: savedLead.id,
-      name: savedLead.name,
-      email: savedLead.email,
-      source: savedLead.source,
-    });
+    sendLeadNotification({ name, lastname, email, phone, company, interest, message, source });
 
     return NextResponse.json(
       {

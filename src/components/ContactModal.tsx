@@ -5,6 +5,7 @@ import { useState } from 'react';
 type FormData = {
   fullName: string;
   email: string;
+  phone: string;
   company: string;
   teamSize: string;
   areas: string[];
@@ -25,6 +26,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     email: '',
+    phone: '',
     company: '',
     teamSize: '',
     areas: [],
@@ -65,7 +67,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
           name: formData.fullName.split(' ')[0] || formData.fullName,
           lastname: formData.fullName.split(' ').slice(1).join(' ') || '',
           email: formData.email,
-          phone: '',
+          phone: formData.phone,
           interest: formData.areas.join(','),
           message: `Empresa: ${formData.company} | Personas: ${formData.teamSize} | Áreas: ${areasLabel}`,
           source: 'contact-modal',
@@ -78,7 +80,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       setSubmitStatus('success');
 
       setTimeout(() => {
-        setFormData({ fullName: '', email: '', company: '', teamSize: '', areas: [] });
+        setFormData({ fullName: '', email: '', phone: '', company: '', teamSize: '', areas: [] });
         setSubmitStatus('idle');
         onClose();
       }, 3000);
@@ -186,6 +188,25 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="nombre@empresa.com"
+                className="focus:ring-brand-orange/50 focus:border-brand-orange w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="modal-phone"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
+                Teléfono de contacto *
+              </label>
+              <input
+                type="tel"
+                id="modal-phone"
+                name="phone"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="+58 412-000-0000"
                 className="focus:ring-brand-orange/50 focus:border-brand-orange w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:outline-none"
               />
             </div>
