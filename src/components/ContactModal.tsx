@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type FormData = {
   fullName: string;
@@ -8,14 +8,14 @@ type FormData = {
   phone: string;
   company: string;
   teamSize: string;
-  areas: string[];
+  courseIds: string[];
 };
 
-const AREA_OPTIONS = [
-  { value: 'ofimatica', label: 'Ofimática' },
-  { value: 'atencion-cliente', label: 'Atención al Cliente' },
-  { value: 'gerencia', label: 'Gerencia' },
-];
+type Course = {
+  id: number;
+  title: string;
+  slug: string;
+};
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -29,34 +29,47 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     phone: '',
     company: '',
     teamSize: '',
-    areas: [],
+    courseIds: [],
   });
 
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loadingCourses, setLoadingCourses] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    if (isOpen && courses.length === 0) {
+      setLoadingCourses(true);
+      fetch('/api/courses')
+        .then((res) => res.json())
+        .then((data) => setCourses(data.courses || []))
+        .catch(console.error)
+        .finally(() => setLoadingCourses(false));
+    }
+  }, [isOpen, courses.length]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const toggleArea = (value: string) => {
+  const toggleCourse = (slug: string) => {
     setFormData((prev) => ({
       ...prev,
-      areas: prev.areas.includes(value)
-        ? prev.areas.filter((a) => a !== value)
-        : [...prev.areas, value],
+      courseIds: prev.courseIds.includes(slug)
+        ? prev.courseIds.filter((s) => s !== slug)
+        : [...prev.courseIds, slug],
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.phone.trim() || formData.areas.length === 0) return;
+    if (!formData.phone.trim() || formData.courseIds.length === 0) return;
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    const areasLabel = formData.areas
-      .map((v) => AREA_OPTIONS.find((o) => o.value === v)?.label || v)
+    const selectedCourses = formData.courseIds
+      .map((slug) => courses.find((c) => c.slug === slug)?.title || slug)
       .join(', ');
 
     try {
@@ -68,8 +81,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
           lastname: formData.fullName.split(' ').slice(1).join(' ') || '',
           email: formData.email,
           phone: formData.phone,
-          interest: formData.areas.join(','),
-          message: `Empresa: ${formData.company} | Personas: ${formData.teamSize} | Áreas: ${areasLabel}`,
+          interest: selectedCourses,
+          message: `Empresa: ${formData.company} | Personas: ${formData.teamSize} | Cursos: ${selectedCourses}`,
           source: 'contact-modal',
         }),
       });
@@ -80,7 +93,14 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       setSubmitStatus('success');
 
       setTimeout(() => {
-        setFormData({ fullName: '', email: '', phone: '', company: '', teamSize: '', areas: [] });
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          company: '',
+          teamSize: '',
+          courseIds: [],
+        });
         setSubmitStatus('idle');
         onClose();
       }, 3000);
@@ -128,7 +148,6 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
 
       <div className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-2xl">
-        {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 p-6">
           <h2 className="text-brand-navy text-xl font-bold">Cotizar ahora</h2>
           <button
@@ -147,7 +166,6 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
           </button>
         </div>
 
-        {/* Form */}
         <div className="p-6">
           <p className="mb-6 text-sm text-slate-500">
             Completa el formulario y te enviaremos una propuesta personalizada.
@@ -206,7 +224,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 required
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+58 412-000-0000"
+                placeholder="Ej: 0412-555-0000"
                 className="focus:ring-brand-orange/50 focus:border-brand-orange w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder-slate-400 transition-all duration-200 focus:ring-2 focus:outline-none"
               />
             </div>
@@ -251,25 +269,32 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </div>
 
             <div>
-              <p className="mb-2 block text-sm font-medium text-slate-700">Áreas de Interés *</p>
-              <div className="flex flex-wrap gap-2">
-                {AREA_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => toggleArea(opt.value)}
-                    className={`rounded-lg border px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
-                      formData.areas.includes(opt.value)
-                        ? 'bg-brand-orange border-brand-orange text-white shadow-sm'
-                        : 'hover:border-brand-orange/50 border-slate-300 bg-white text-slate-700'
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-              {formData.areas.length === 0 && (
-                <p className="mt-1.5 text-xs text-slate-400">Selecciona al menos un área</p>
+              <p className="mb-2 block text-sm font-medium text-slate-700">Cursos de interés *</p>
+              {loadingCourses ? (
+                <div className="flex items-center gap-2 py-3 text-sm text-slate-400">
+                  <div className="border-brand-navy h-4 w-4 animate-spin rounded-full border-2 border-t-transparent" />
+                  Cargando cursos...
+                </div>
+              ) : (
+                <div className="flex max-h-48 flex-wrap gap-2 overflow-y-auto">
+                  {courses.map((course) => (
+                    <button
+                      key={course.slug}
+                      type="button"
+                      onClick={() => toggleCourse(course.slug)}
+                      className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                        formData.courseIds.includes(course.slug)
+                          ? 'bg-brand-orange border-brand-orange text-white shadow-sm'
+                          : 'hover:border-brand-orange/50 border-slate-300 bg-white text-slate-700'
+                      }`}
+                    >
+                      {course.title}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {formData.courseIds.length === 0 && !loadingCourses && (
+                <p className="mt-1.5 text-xs text-slate-400">Selecciona al menos un curso</p>
               )}
             </div>
 

@@ -30,14 +30,49 @@ export async function POST(request: NextRequest) {
     const message = body.message?.trim() || null;
     const source = body.source || 'hero-form';
 
+    // 1. Crear lead
     const rows = await sql`
       INSERT INTO leads (name, lastname, email, company, phone, interest, message, source, status)
-      VALUES (${name}, ${lastname}, ${email}, ${company}, ${phone}, ${interest}, ${message}, ${source}, 'new')
+      VALUES (${name}, ${lastname}, ${email}, ${company}, ${phone}, ${interest}, ${message}, ${source}, 'contactado')
       RETURNING id, name, email, source
     `;
-
     const savedLead = rows[0];
 
+    // 2. Crear o reusar contacto
+    let contactId: number;
+    const existingContact = await sql`SELECT id FROM contacts WHERE email = ${email}`;
+    if (existingContact.length > 0) {
+      contactId = existingContact[0].id;
+    } else {
+      const contactRows = await sql`
+        INSERT INTO contacts (name, lastname, email, company, phone, notes, lead_id)
+        VALUES (${name}, ${lastname}, ${email}, ${company}, ${phone}, ${message}, ${savedLead.id})
+        RETURNING id
+      `;
+      contactId = contactRows[0].id;
+    }
+
+    // 3. Vincular lead al contacto
+    await sql`UPDATE leads SET converted_to_contact_id = ${contactId}, updated_at = now() WHERE id = ${savedLead.id}`;
+
+    // 4. Crear deal en stage pendiente
+    const fullName = [name, lastname].filter(Boolean).join(' ');
+    const dealTitle = company ? `${company} — ${fullName}` : `Deal — ${fullName}`;
+    const dealNotes = interest ? `Cursos de interés: ${interest}` : null;
+
+    const dealRows = await sql`
+      INSERT INTO deals (title, contact_id, stage, notes)
+      VALUES (${dealTitle}, ${contactId}, ${'pendiente'}, ${dealNotes})
+      RETURNING id
+    `;
+    if (dealRows[0]) {
+      await sql`
+        INSERT INTO deal_activities (deal_id, from_stage, to_stage, note)
+        VALUES (${dealRows[0].id}, ${null}, ${'pendiente'}, ${'Deal creado automáticamente desde formulario web'})
+      `;
+    }
+
+    // 5. Enviar notificación por email (no bloqueante)
     sendLeadNotification({ name, lastname, email, phone, company, interest, message, source });
 
     return NextResponse.json(
