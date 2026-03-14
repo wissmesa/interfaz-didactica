@@ -51,7 +51,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.areas.length === 0) return;
+    if (!formData.phone.trim() || formData.areas.length === 0) return;
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
