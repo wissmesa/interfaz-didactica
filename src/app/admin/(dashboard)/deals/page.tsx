@@ -16,6 +16,7 @@ type Deal = {
   contact_lastname: string | null;
   contact_email: string | null;
   contact_company: string | null;
+  contact_phone: string | null;
   created_at: string;
 };
 
@@ -375,15 +376,34 @@ export default function AdminDealsPage() {
                             {deal.title}
                           </p>
                           {deal.contact_name && (
-                            <p className="mb-1 text-xs text-slate-500">
-                              {deal.contact_name}
-                              {deal.contact_lastname ? ` ${deal.contact_lastname}` : ''}
-                              {deal.contact_company && (
-                                <span className="text-slate-400"> · {deal.contact_company}</span>
-                              )}
-                            </p>
+                            <div className="mb-2 flex items-start gap-2 rounded-md bg-slate-50 px-2 py-1.5">
+                              <div className="bg-brand-navy mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white">
+                                {deal.contact_name[0].toUpperCase()}
+                              </div>
+                              <div className="min-w-0">
+                                <p className="truncate text-xs font-medium text-slate-700">
+                                  {deal.contact_name}
+                                  {deal.contact_lastname ? ` ${deal.contact_lastname}` : ''}
+                                </p>
+                                {deal.contact_company && (
+                                  <p className="truncate text-[10px] text-slate-400">
+                                    {deal.contact_company}
+                                  </p>
+                                )}
+                                {deal.contact_email && (
+                                  <p className="truncate text-[10px] text-slate-400">
+                                    {deal.contact_email}
+                                  </p>
+                                )}
+                                {deal.contact_phone && (
+                                  <p className="truncate text-[10px] text-slate-400">
+                                    {deal.contact_phone}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
                           )}
-                          <div className="mt-2 flex items-center justify-between">
+                          <div className="flex items-center justify-between">
                             {formatAmount(deal.amount) ? (
                               <span className="text-xs font-semibold text-green-600">
                                 {formatAmount(deal.amount)}

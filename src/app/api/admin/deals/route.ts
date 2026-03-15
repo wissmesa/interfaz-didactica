@@ -12,14 +12,14 @@ export async function GET(request: NextRequest) {
     if (stage && search) {
       const pattern = `%${search}%`;
       deals = await sql`
-        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company
+        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company, c.phone as contact_phone
         FROM deals d LEFT JOIN contacts c ON d.contact_id = c.id
         WHERE d.stage = ${stage} AND (d.title ILIKE ${pattern} OR c.name ILIKE ${pattern} OR c.company ILIKE ${pattern})
         ORDER BY d.created_at DESC LIMIT ${limit}
       `;
     } else if (stage) {
       deals = await sql`
-        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company
+        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company, c.phone as contact_phone
         FROM deals d LEFT JOIN contacts c ON d.contact_id = c.id
         WHERE d.stage = ${stage}
         ORDER BY d.created_at DESC LIMIT ${limit}
@@ -27,14 +27,14 @@ export async function GET(request: NextRequest) {
     } else if (search) {
       const pattern = `%${search}%`;
       deals = await sql`
-        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company
+        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company, c.phone as contact_phone
         FROM deals d LEFT JOIN contacts c ON d.contact_id = c.id
         WHERE d.title ILIKE ${pattern} OR c.name ILIKE ${pattern} OR c.company ILIKE ${pattern}
         ORDER BY d.created_at DESC LIMIT ${limit}
       `;
     } else {
       deals = await sql`
-        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company
+        SELECT d.*, c.name as contact_name, c.lastname as contact_lastname, c.email as contact_email, c.company as contact_company, c.phone as contact_phone
         FROM deals d LEFT JOIN contacts c ON d.contact_id = c.id
         ORDER BY d.created_at DESC LIMIT ${limit}
       `;

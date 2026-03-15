@@ -172,68 +172,65 @@ export default function DealDetailPanel({ dealId, onClose, onUpdate }: Props) {
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          {/* Deal Info */}
+          {/* Deal Title */}
           <div className="border-b border-slate-100 px-6 py-5">
-            <h3 className="mb-3 text-xl font-bold text-slate-900">{deal.title}</h3>
-            {deal.contact_name && (
-              <div className="mb-2 flex items-center gap-2">
-                <svg
-                  className="h-4 w-4 text-slate-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-                <span className="text-sm font-medium text-slate-700">
-                  {deal.contact_name}
-                  {deal.contact_lastname ? ` ${deal.contact_lastname}` : ''}
-                </span>
-                {deal.contact_company && (
-                  <span className="text-sm text-slate-500">· {deal.contact_company}</span>
-                )}
+            <h3 className="text-xl font-bold text-slate-900">{deal.title}</h3>
+            <p className="mt-1 text-xs text-slate-400">
+              Creado el{' '}
+              {new Date(deal.created_at).toLocaleDateString('es-VE', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </p>
+          </div>
+
+          {/* Contact Card */}
+          <div className="border-b border-slate-100 px-6 py-5">
+            <p className="mb-3 text-xs font-medium tracking-wider text-slate-500 uppercase">
+              Contacto asociado
+            </p>
+            {deal.contact_name ? (
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                <div className="flex items-start gap-3">
+                  <div className="bg-brand-navy flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white">
+                    {(deal.contact_name?.[0] || '?').toUpperCase()}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-slate-900">
+                      {deal.contact_name}
+                      {deal.contact_lastname ? ` ${deal.contact_lastname}` : ''}
+                    </p>
+                    {deal.contact_company && (
+                      <p className="text-xs text-slate-500">{deal.contact_company}</p>
+                    )}
+                    <div className="mt-2 space-y-1">
+                      {deal.contact_email && (
+                        <div className="flex items-center gap-2">
+                          <svg className="h-3.5 w-3.5 shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                          </svg>
+                          <a href={`mailto:${deal.contact_email}`} className="text-brand-navy text-xs hover:underline">
+                            {deal.contact_email}
+                          </a>
+                        </div>
+                      )}
+                      {deal.contact_phone && (
+                        <div className="flex items-center gap-2">
+                          <svg className="h-3.5 w-3.5 shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                          </svg>
+                          <span className="text-xs text-slate-600">{deal.contact_phone}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-            )}
-            {deal.contact_email && (
-              <div className="mb-2 flex items-center gap-2">
-                <svg
-                  className="h-4 w-4 text-slate-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-                <span className="text-sm text-slate-600">{deal.contact_email}</span>
-              </div>
-            )}
-            {deal.contact_phone && (
-              <div className="flex items-center gap-2">
-                <svg
-                  className="h-4 w-4 text-slate-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-                <span className="text-sm text-slate-600">{deal.contact_phone}</span>
-              </div>
+            ) : (
+              <p className="rounded-lg border border-dashed border-slate-200 py-4 text-center text-sm text-slate-400">
+                Sin contacto asociado
+              </p>
             )}
           </div>
 
