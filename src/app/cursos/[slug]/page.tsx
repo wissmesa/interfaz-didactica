@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { sql } from '@/lib/db';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getCourseImage } from '@/lib/course-images';
 import { CourseCard, CourseCardData } from '@/components/CourseCard';
 import { CourseCtaButton } from '@/components/CourseCtaButton';
@@ -17,6 +17,15 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+function toSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
 export default async function Page({ params }: Props) {
   const { slug } = await params;
 
@@ -28,7 +37,14 @@ export default async function Page({ params }: Props) {
     WHERE c.slug = ${slug} AND c.active = true
   `;
 
-  if (rows.length === 0) return notFound();
+  if (rows.length === 0) {
+    const normalized = toSlug(slug);
+    if (normalized !== slug) {
+      const check = await sql`SELECT slug FROM courses WHERE slug = ${normalized} AND active = true`;
+      if (check.length > 0) redirect(`/cursos/${normalized}`);
+    }
+    return notFound();
+  }
 
   const course = rows[0];
   const modalities = (course.modality_names as string[] | null) || [];
