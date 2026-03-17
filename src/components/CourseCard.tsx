@@ -5,7 +5,7 @@ import { getCourseImage } from '@/lib/course-images';
 export type CourseCardData = {
   slug: string;
   title: string;
-  excerpt?: string | null;
+  general_objective?: string | null;
   hours?: number | null;
   image?: string | null;
   category_slug?: string | null;
@@ -59,9 +59,9 @@ export function CourseCard({ course }: Props) {
           {course.title}
         </h3>
 
-        {course.excerpt && (
+        {course.general_objective && (
           <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-500">
-            {course.excerpt}
+            {course.general_objective}
           </p>
         )}
 

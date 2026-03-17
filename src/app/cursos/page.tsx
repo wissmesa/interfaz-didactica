@@ -67,7 +67,7 @@ export default async function Page({ searchParams }: Props) {
   const courses: CourseCardData[] = coursesRaw.map((c: Record<string, unknown>) => ({
     slug: c.slug as string,
     title: c.title as string,
-    excerpt: c.excerpt as string | null,
+    general_objective: c.general_objective as string | null,
     hours: c.hours as number | null,
     image: c.image as string | null,
     category_slug: c.category_slug as string | null,
