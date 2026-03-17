@@ -43,8 +43,8 @@ export default function AdminCursosPage() {
     fetchCourses();
   };
 
-  const deleteCourse = async (id: number) => {
-    if (!confirm('¿Estás seguro de eliminar este curso?')) return;
+  const archiveCourse = async (id: number) => {
+    if (!confirm('¿Estás seguro de archivar este curso? Se desactivará pero no se eliminará su información.')) return;
     await fetch(`/api/admin/courses/${id}`, { method: 'DELETE' });
     fetchCourses();
   };
@@ -134,10 +134,10 @@ export default function AdminCursosPage() {
                         Editar
                       </Link>
                       <button
-                        onClick={() => deleteCourse(course.id)}
-                        className="text-sm text-red-600 hover:underline"
+                        onClick={() => archiveCourse(course.id)}
+                        className="text-sm text-amber-600 hover:underline"
                       >
-                        Eliminar
+                        Archivar
                       </button>
                     </div>
                   </td>

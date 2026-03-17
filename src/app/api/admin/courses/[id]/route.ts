@@ -53,20 +53,20 @@ export async function PUT(request: NextRequest, context: RouteContext) {
       UPDATE courses SET
         slug = COALESCE(${slug || null}, slug),
         title = COALESCE(${title || null}, title),
-        excerpt = ${excerpt ?? null},
-        description = ${description ?? null},
-        hours = ${hours ?? null},
-        requirements = ${requirements ?? null},
-        audience = ${audience ?? null},
-        image = ${image ?? null},
-        category_slug = ${categorySlug ?? null},
-        featured = COALESCE(${featured}, featured),
-        active = COALESCE(${active}, active),
-        general_objective = ${generalObjective ?? null},
-        specific_objectives = ${JSON.stringify(specificObjectives ?? [])},
-        methodology = ${methodology ?? null},
-        benefits = ${JSON.stringify(benefits ?? [])},
-        content_modules = ${JSON.stringify(contentModules ?? [])},
+        excerpt = COALESCE(${excerpt ?? null}, excerpt),
+        description = COALESCE(${description ?? null}, description),
+        hours = COALESCE(${hours ?? null}, hours),
+        requirements = COALESCE(${requirements ?? null}, requirements),
+        audience = COALESCE(${audience ?? null}, audience),
+        image = COALESCE(${image ?? null}, image),
+        category_slug = COALESCE(${categorySlug ?? null}, category_slug),
+        featured = COALESCE(${featured ?? null}, featured),
+        active = COALESCE(${active ?? null}, active),
+        general_objective = COALESCE(${generalObjective ?? null}, general_objective),
+        specific_objectives = COALESCE(${specificObjectives !== undefined ? JSON.stringify(specificObjectives) : null}, specific_objectives),
+        methodology = COALESCE(${methodology ?? null}, methodology),
+        benefits = COALESCE(${benefits !== undefined ? JSON.stringify(benefits) : null}, benefits),
+        content_modules = COALESCE(${contentModules !== undefined ? JSON.stringify(contentModules) : null}, content_modules),
         updated_at = now()
       WHERE id = ${parseInt(id)}
       RETURNING *
@@ -98,7 +98,9 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
   try {
     const { id } = await context.params;
     const rows = await sql`
-      DELETE FROM courses WHERE id = ${parseInt(id)} RETURNING id
+      UPDATE courses SET active = false, updated_at = now()
+      WHERE id = ${parseInt(id)}
+      RETURNING id
     `;
 
     if (rows.length === 0) {
@@ -107,7 +109,7 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error deleting course:', error);
-    return NextResponse.json({ error: 'Error al eliminar curso' }, { status: 500 });
+    console.error('Error archiving course:', error);
+    return NextResponse.json({ error: 'Error al archivar curso' }, { status: 500 });
   }
 }
